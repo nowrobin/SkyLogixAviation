@@ -32,10 +32,10 @@ export default function Home() {
       <div className="relative w-full h-[700px] flex">
         <Image src={"/landing_Image.png"} alt={""} style={{ objectFit: "fill" }} fill loading="lazy" />
         <div className="absolute flex flex-col justify-center items-center size-full gap-3">
-          <div className="text-6xl font-bold">Learn to Fly an Aircraft</div>
+          <div className="text-6xl font-bold">Learn to Fly</div>
           <div className="text-4xl ">in a way that is quick, easy, and efficient</div>
           <button className="py-2 bg-black text-white px-3 rounded-xl mt-5">
-            Schedule Now! (Old Customer)
+            Contact Us
           </button>
 
         </div>
