@@ -41,12 +41,11 @@ export default function Home() {
           <button className="py-2 bg-black text-white px-3 rounded-xl mt-5">
             Contact Us
           </button>
-
         </div>
-
       </div>
-      <main>
-        <section className=" flex flex-col gap-30 justify-center py-32">
+      <main >
+        <div className={"pl-60 text-6xl font-bold text-[#FFBD59] my-10"}>Aircrafts</div>
+        <section className=" flex flex-col gap-30 justify-center pb-32">
           <PlaneItems images={[
             '/N49202/N49202_1.jpeg',
             '/N49202/N49202_2.jpeg',
