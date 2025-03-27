@@ -9,7 +9,7 @@ type PlaneDetails = {
 }
 
 
-export default function PlaneItems({ images, descriptions: desc, odd, comingSoon }: PlaneDetails) {
+export default function PlaneItems({ images, odd, comingSoon }: PlaneDetails) {
   const [imageIndex, setImageIndex] = useState(0)
   const handlePrev = () => {
     if (imageIndex === 0) {
