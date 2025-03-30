@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 type PlaneDetails = {
   images: string[],
   descriptions: string[],
@@ -23,8 +23,37 @@ export default function PlaneItems({ images, odd, comingSoon }: PlaneDetails) {
     } else
       setImageIndex(imageIndex + 1)
   }
+
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true); // Trigger animation when visible
+          }
+        });
+      },
+      { threshold: 0.7 } // 50% 이상 보이면 애니메이션 시작
+    );
+
+    const target = document.getElementById('slide-div');
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
+  }, []);
+
+  console.log(isVisible)
   return (
-    <div className="flex flex-row rounded-3xl gap-20 w-full justify-center h-[20rem] items-center">
+    <div id="slide-div" className={`flex flex-row rounded-3xl gap-20 w-full justify-center h-[20rem] items-center transition-transform duration-1000  ${odd ? isVisible ? 'translate-x-0' : '-translate-x-72' : isVisible ? 'translate-x-0' : 'translate-x-72'}`}>
       {
         comingSoon ?
           <div className="flex flex-row w-[1048px] justify-between h-full ">
