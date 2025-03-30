@@ -12,10 +12,10 @@ export default function Home() {
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const scrollToSection = () => {
     if (sectionRef.current) {
-      const y = sectionRef.current.getBoundingClientRect().top + window.scrollY;
+      const y = sectionRef.current?.getBoundingClientRect().top + window.scrollY;
       const offset = 80; // 고정된 헤더 높이만큼
       window.scrollTo({ top: y - offset, behavior: 'smooth' });
     }
