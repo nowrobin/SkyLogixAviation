@@ -9,8 +9,6 @@ export default function Home() {
   const [btnOpen, setBtnOpen] = useState(false)
   const [crew, setCrew] = useState(0)
 
-
-
   const handleTopClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

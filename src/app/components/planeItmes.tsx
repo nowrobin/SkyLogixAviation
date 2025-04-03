@@ -51,7 +51,7 @@ export default function PlaneItems({ images, odd, comingSoon }: PlaneDetails) {
   }, []);
 
   return (
-    <div id="slide-div" className={`flex  rounded-3xl tablet:gap-10 desktop:gap-20 w-full justify-center h-fit items-center transition-transform duration-1000  ${odd ? isVisible ? 'translate-x-0' : '-translate-x-72' : isVisible ? 'translate-x-0' : 'translate-x-72'}`}>
+    <div id="slide-div" className={`flex  rounded-3xl tablet:gap-10 desktop:gap-20 w-full justify-center h-fit items-center tablet:transition-transform duration-1000 inset-0  ${odd ? isVisible ? 'tablet:translate-x-0' : 'tablet:-translate-x-72' : isVisible ? 'tablet:translate-x-0' : 'tablet:translate-x-72'}`}>
       {
         comingSoon ?
           <div className="flex flex-col gap-10 tablet:flex-row desktop:flex-row px-4 desktop:w-[1048px] justify-between h-full">
