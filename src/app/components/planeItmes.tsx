@@ -24,7 +24,6 @@ export default function PlaneItems({ images, odd, comingSoon }: PlaneDetails) {
       setImageIndex(imageIndex + 1)
   }
 
-
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -51,52 +50,56 @@ export default function PlaneItems({ images, odd, comingSoon }: PlaneDetails) {
     };
   }, []);
 
-  console.log(isVisible)
   return (
-    <div id="slide-div" className={`flex flex-row rounded-3xl gap-20 w-full justify-center h-[20rem] items-center transition-transform duration-1000  ${odd ? isVisible ? 'translate-x-0' : '-translate-x-72' : isVisible ? 'translate-x-0' : 'translate-x-72'}`}>
+    <div id="slide-div" className={`flex  rounded-3xl tablet:gap-10 desktop:gap-20 w-full justify-center h-fit items-center transition-transform duration-1000  ${odd ? isVisible ? 'translate-x-0' : '-translate-x-72' : isVisible ? 'translate-x-0' : 'translate-x-72'}`}>
       {
         comingSoon ?
-          <div className="flex flex-row w-[1048px] justify-between h-full ">
-            <section className="relative flex flex-row justify-center items-center w-[480px] h-[18rem] rounded-xl shadow-2xl ">
-              <div>
-                <Image className="rounded-xl bg-transparent" src={images[imageIndex]} alt={"PlaneImages"} fill style={{ objectFit: 'cover', position: "absolute" }} /></div>
+          <div className="flex flex-col gap-10 tablet:flex-row desktop:flex-row px-4 desktop:w-[1048px] justify-between h-full">
+            <section className="relative flex flex-row justify-center items-center tablet:w-[480px] h-[18rem] rounded-xl shadow-2xl ">
+              <div className="">
+                <Image className="rounded-xl bg-transparent" src={images[imageIndex]} alt={"PlaneImages"} fill style={{ objectFit: 'cover', position: "absolute" }} />
+              </div>
             </section>
-            <article className="flex flex-col w-[480px] gap-2 h-full justify-center items-center">
-              <div className="text-5xl font-bold font-winky">Coming Soon ...</div>
+            <article className="flex flex-col tablet:w-[480px] gap-2 h-full justify-center items-center">
+              <div className="text-3xl tablet:text-5xl font-bold font-winky">Coming Soon ...</div>
             </article >
           </div>
           :
-          odd ? <div className="flex flex-row w-[1048px] justify-between ">
-            <section className="relative flex flex-row justify-center items-center w-[480px] h-[18rem] rounded-xl shadow-2xl ">
-              <button className="absolute left-0 z-10 h-full rounded-l-xl" onClick={handlePrev}>
-                <Image src={'/icon/chev_left_white.svg'} alt={"chevIcon"} width={48} height={48} />
-              </button>
-              <div>
-                <Image className="rounded-xl bg-transparent" src={images[imageIndex]} alt={"PlaneImages"} fill style={{ objectFit: 'cover', position: "absolute" }} /></div>
-              <button className="absolute right-0  z-10 h-full rounded-r-xl" onClick={handleNext}>
-                <Image src={'/icon/chev_right_white.svg'} alt={"chevIcon"} width={48} height={48} />
-              </button>
-            </section>
-            <article className="flex flex-col w-[480px] gap-2 h-full justify-center">
-              <div className="text-5xl font-bold font-winky">N49202</div>
-              <div className="text-xl font-semibold text-gray-500">1977 Cessna 152 II</div>
-              <div className="text-xl font-semibold text-gray-500">Lycoming O-235-L2C (115HP)</div>
-              <div className="text-xl font-semibold text-gray-500">Flight Rule: IFR</div>
-              <div className="text-xl font-semibold text-gray-500">Price:$120 /hr (Wet)</div>
-              <div className="text-xl font-semibold text-gray-500">The Cessna 152 is a reliable, fuel-efficient two-seat trainer, perfect for safe and affordable flight training.</div>
-            </article >
-
-          </div> :
-            <div className="flex flex-row w-[1048px] justify-between ">
-              <article className="flex flex-col w-[480px] gap-2 h-full justify-center">
-                <div className="text-5xl font-bold font-winky">N4900L</div>
-                <div className="text-xl font-semibold text-gray-500">1980 Cessna 152 II</div>
-                <div className="text-xl font-semibold text-gray-500">Lycoming O-235-L2C (115HP)</div>
-                <div className="text-xl font-semibold text-gray-500">Flight Rule: IFR</div>
-                <div className="text-xl font-semibold text-gray-500">Price:$120 /hr (Wet)</div>
-                <div className="text-xl font-semibold text-gray-500">The Cessna 152 is a reliable, fuel-efficient two-seat trainer, perfect for safe and affordable flight training.</div>
+          odd ?
+            <div className="flex flex-col gap-10 tablet:flex-row desktop:flex-row  px-4 desktop:w-[1048px] justify-between h-full">
+              <section className="relative flex flex-row justify-center items-center  tablet:w-[480px] h-[18rem] rounded-xl shadow-2xl ">
+                <button className="absolute left-0 z-10 h-full rounded-l-xl" onClick={handlePrev}>
+                  <Image src={'/icon/chev_left_white.svg'} alt={"chevIcon"} width={48} height={48} />
+                </button>
+                <div>
+                  <Image className="rounded-xl bg-transparent" src={images[imageIndex]} alt={"PlaneImages"} fill style={{ objectFit: 'cover', position: "absolute" }} />
+                </div>
+                <button className="absolute right-0  z-10 h-full rounded-r-xl" onClick={handleNext}>
+                  <Image src={'/icon/chev_right_white.svg'} alt={"chevIcon"} width={48} height={48} />
+                </button>
+              </section>
+              <article className="flex flex-col  tablet:w-[480px] gap-2 h-full justify-center">
+                <div className="text-3xl tablet:text-5xl font-bold font-winky">N49202</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">1977 Cessna 152 II</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">Lycoming O-235-L2C (115HP)</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">Flight Rule: IFR</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">Price: $120 /hr (Wet)</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">Instructor: $55 / hr</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">The Cessna 152 is a reliable, fuel-efficient two-seat trainer, perfect for safe and affordable flight training.</div>
               </article >
-              <section className="relative flex flex-row justify-center items-center w-[480px] h-[18rem] rounded-xl shadow-2xl ">
+            </div>
+            :
+            <div className="flex flex-col-reverse gap-10 tablet:flex-row desktop:flex-row  px-4 desktop:w-[1048px] justify-between ">
+              <article className="flex flex-col tablet:w-[480px] gap-2 h-full justify-center">
+                <div className="text-3xl tablet:text-5xl font-bold font-winky">N4900L</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">1980 Cessna 152 II</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">Lycoming O-235-L2C (115HP)</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">Flight Rule: IFR</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">Price:$120 /hr (Wet)</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">Instructor: $55 / hr</div>
+                <div className="tablet:text-xl font-semibold text-gray-500">The Cessna 152 is a reliable, fuel-efficient two-seat trainer, perfect for safe and affordable flight training.</div>
+              </article >
+              <section className="relative flex flex-row justify-center items-center tablet:w-[480px] h-[18rem] rounded-xl shadow-2xl ">
                 <button className="absolute left-0 z-10 h-full rounded-l-xl" onClick={handlePrev}>
                   <Image src={'/icon/chev_left_white.svg'} alt={"chevIcon"} width={48} height={48} />
                 </button>
@@ -108,7 +111,6 @@ export default function PlaneItems({ images, odd, comingSoon }: PlaneDetails) {
               </section>
             </div>
       }
-
     </div >
   )
 }

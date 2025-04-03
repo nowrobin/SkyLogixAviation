@@ -5,7 +5,6 @@
   --font-sans: var(--font-geist-sans);
   --font-winky: var(--font-winky);
   --font-mono: var(--font-geist-mono);
-  --breakpoint-*: initial;
   --breakpoint-mobile: 24rem;
   --breakpoint-tablet: 40rem;
   --breakpoint-laptop: 64rem;
