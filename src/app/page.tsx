@@ -18,19 +18,20 @@ export default function Home() {
   const sectionAirCraftRef = useRef<HTMLDivElement | null>(null);
   const sectionCrewRef = useRef<HTMLDivElement | null>(null);
 
-  const scrollToSection = () => {
+  const scrollToSectionAirCraft = () => {
     if (sectionAirCraftRef.current) {
       const y = sectionAirCraftRef.current?.getBoundingClientRect().top + window.scrollY;
       const offset = 80; // 고정된 헤더 높이만큼
       window.scrollTo({ top: y - offset, behavior: 'smooth' });
     }
+  };
+  const scrollToSectionCrew = () => {
     if (sectionCrewRef.current) {
       const y = sectionCrewRef.current?.getBoundingClientRect().top + window.scrollY;
-      const offset = 40; // 고정된 헤더 높이만큼
+      const offset = 80; // 고정된 헤더 높이만큼
       window.scrollTo({ top: y - offset, behavior: 'smooth' });
     }
   };
-
 
 
   const handleNextCrew = () => {
@@ -60,8 +61,8 @@ export default function Home() {
         </div>
         <div className="flex-row  hidden tablet:flex desktop:flex gap-10 mr-10 justify-center items-center text-gray-600 font-semibold cursor-default ">
           <div className="hover:text-[#FFBD59]" onClick={handleTopClick}>Home</div>
-          <div className="hover:text-[#FFBD59]" onClick={scrollToSection}>Aircrafts</div>
-          <div className="hover:text-[#FFBD59]" onClick={scrollToSection}>Our Crew</div>
+          <div className="hover:text-[#FFBD59]" onClick={scrollToSectionAirCraft}>Aircrafts</div>
+          <div className="hover:text-[#FFBD59]" onClick={scrollToSectionCrew}>Our Crew</div>
           <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl" onClick={() => router.push('/Contact')} >Contact Us</button>
         </div>
       </section>
@@ -79,14 +80,13 @@ export default function Home() {
             </div>
             <div className="flex flex-col  gap-3 justify-center items-center text-gray-600 font-semibold cursor-default ">
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={handleTopClick}>Home</div>
-              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSection}>Aircrafts</div>
-              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSection}>Our Crew</div>
+              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSectionAirCraft}>Aircrafts</div>
+              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSectionCrew}>Our Crew</div>
               <button className="text-xl  py-2 bg-[#FFBD59] text-black px-3 rounded-xl" onClick={() => router.push('/Contact')} >Contact Us</button>
             </div>
           </div>
         }
       </section >
-
       <section className="relative flex w-full h-[400px] tablet:h-[700px]">
         <Image className="absolute top-0 left-0 -z-10" src={"/landing_Image.png"} alt={"Landing Image"} style={{ objectFit: "fill" }} fill loading="lazy" />
         <div className="flex flex-col justify-center items-center size-full gap-3">
