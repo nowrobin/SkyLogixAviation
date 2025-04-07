@@ -1,5 +1,6 @@
 'use client'
 
+import ContactForm from "@/app/components/forms/ContactForm"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -7,7 +8,7 @@ export default function ContactPage() {
   const router = useRouter()
 
   return (
-    <div className="relative flex tablet:flex-row w-full">
+    <div className="relative flex  flex-col tablet:flex-row w-full">
       <section className="fixed top-0 z-30 bg-white flex flex-row justify-between items-center w-full px-3 p-2" >
         <div onClick={() => router.push('/')} >
           <Image src={"/fullLogo.png"} alt={""} width={240} height={40} />
@@ -16,18 +17,19 @@ export default function ContactPage() {
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')} >Home</div>
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')}>Aircrafts</div>
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')}>Our Crew</div>
+          <div className="hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
           {/* <div>Become A Pilot</div> */}
           {/* <div>About Us</div> */}
-          <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl">Contact Us</button>
+          <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59] ">Contact Us</button>
         </div>
       </section >
-      <section className="absolute tablet:static w-full -z-10 tablet:z-0 tablet:flex tablet:w-1/2">
-        <div className="relative w-full h-screen">
+      <section className="absolute  tablet:static w-full -z-10 tablet:z-0 tablet:flex tablet:w-1/2">
+        <div className="relative w-full tablet:h-screen h-[650px]">
           <Image src={"/mockDesign.png"} alt={""} fill style={{ objectFit: 'cover' }}></Image>
         </div>
       </section>
-      <section className="flex flex-col tablet:w-1/2 self-center ">
-        <div className="flex flex-col p-10 tablet:p-20 tablet:mt-0 gap-4 bg-white/80 mt-20">
+      <section className="tablet:absolute  flex flex-col tablet:w-1/2 self-center px-10">
+        <div className="flex flex-col p-8 tablet:p-14 tablet:mt-0 gap-4  rounded-3xl  bg-white/50 mt-20 font-medium">
           <div className=" flex flex-row text-2xl">
             Have questions about flight training, scheduling, or our programs? We’re here to help! Whether you’re ready to start your journey toward becoming a pilot or just need more information, feel free to reach out.
           </div>
@@ -45,6 +47,10 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <section className="flex self-center top-0 w-full tablet:w-1/2  mt-24 mb-10 tablet:mt-0 tablet:mb-0">
+        <ContactForm />
+      </section>
     </div>
   )
 }
+

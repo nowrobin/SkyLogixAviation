@@ -19,36 +19,35 @@ export default function Home() {
   const scrollToSectionAirCraft = () => {
     if (sectionAirCraftRef.current) {
       const y = sectionAirCraftRef.current?.getBoundingClientRect().top + window.scrollY;
-      const offset = 80; // 고정된 헤더 높이만큼
+      const offset = 70; // 고정된 헤더 높이만큼
       window.scrollTo({ top: y - offset, behavior: 'smooth' });
     }
   };
   const scrollToSectionCrew = () => {
     if (sectionCrewRef.current) {
       const y = sectionCrewRef.current?.getBoundingClientRect().top + window.scrollY;
-      const offset = 80; // 고정된 헤더 높이만큼
+      const offset = 40; // 고정된 헤더 높이만큼
       window.scrollTo({ top: y - offset, behavior: 'smooth' });
     }
   };
 
 
-  const handleNextCrew = () => {
-    if (crew == 2) {
-      setCrew(0)
-    } else {
-      setCrew(crew + 1)
-    }
-  }
-  const handlePrevCrew = () => {
-    if (crew == 0) {
-      setCrew(2)
-    } else {
-      setCrew(crew - 1)
-    }
-  }
+  // const handleNextCrew = () => {
+  //   if (crew == 2) {
+  //     setCrew(0)
+  //   } else {
+  //     setCrew(crew + 1)
+  //   }
+  // }
+  // const handlePrevCrew = () => {
+  //   if (crew == 0) {
+  //     setCrew(2)
+  //   } else {
+  //     setCrew(crew - 1)
+  //   }
+  // }
   const router = useRouter()
 
-  console.log(btnOpen)
 
 
   return (
@@ -61,7 +60,8 @@ export default function Home() {
           <div className="hover:text-[#FFBD59]" onClick={handleTopClick}>Home</div>
           <div className="hover:text-[#FFBD59]" onClick={scrollToSectionAirCraft}>Aircrafts</div>
           <div className="hover:text-[#FFBD59]" onClick={scrollToSectionCrew}>Our Crew</div>
-          <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl" onClick={() => router.push('/Contact')} >Contact Us</button>
+          <div className="hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
+          <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/contact')} >Contact Us</button>
         </div>
       </section>
       <section className="fixed z-30 bg-white  tablet:hidden flex flex-row justify-between items-center w-full px-3 p-2 left-0 top-0">
@@ -80,17 +80,18 @@ export default function Home() {
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={handleTopClick}>Home</div>
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSectionAirCraft}>Aircrafts</div>
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSectionCrew}>Our Crew</div>
-              <button className="text-xl  py-2 bg-[#FFBD59] text-black px-3 rounded-xl" onClick={() => router.push('/Contact')} >Contact Us</button>
+              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
+              <button className="text-xl  py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/contact')} >Contact Us</button>
             </div>
           </div>
         }
       </section >
       <section className="relative flex w-full h-[400px] tablet:h-[700px]">
-        <Image className="absolute top-0 left-0 -z-10" src={"/landing_Image.png"} alt={"Landing Image"} style={{ objectFit: "fill" }} fill loading="lazy" />
+        <Image className="absolute top-0 left-0 -z-10" src={"/landing_Image.png"} alt={"Landing Image"} style={{ objectFit: "cover" }} fill loading="lazy" />
         <div className="flex flex-col justify-center items-center size-full gap-3">
           <div className="text-5xl tablet:text-6xl font-bold">Learn to Fly</div>
           <div className="text-2xl  text-center tablet:text-4xl">in a way that is quick, easy, and efficient</div>
-          <button className="py-2 bg-[#FFBD59] text-black font-semibold px-3 rounded-xl mt-5" onClick={() => router.push('/Contact')}>
+          <button className="py-2 bg-[#FFBD59] text-black font-semibold px-3 rounded-xl mt-5" onClick={() => router.push('/contact')}>
             Contact Us
           </button>
         </div>
@@ -129,72 +130,51 @@ export default function Home() {
             comingSoon={true} />
         </div>
       </section>
-      <section ref={sectionCrewRef} className="flex flex-col items-center  bg-white w-full h-[700px]">
+      <section ref={sectionCrewRef} className="flex flex-col items-center  bg-white w-full h-[700px] mb-3">
         <div className={"text-4xl tablet:text-6xl font-bold text-[#FFBD59] my-12 "}>Our Crew</div>
-        <div className="flex flex-row gap-5 mb-10">
-          <button onClick={() => setCrew(0)} className={`transition-all duration-400 ${crew === 0 ? "text-xl font-bold text-[#FFBD59] p-2 " : "text-gray-400 "}`}>Founder</button> /
-          <button onClick={() => setCrew(1)} className={`transition-all duration-400 ${crew === 1 ? "text-xl font-bold text-[#FFBD59] p-2 " : "text-gray-400 "}`}> Instructors </button> /
-          <button onClick={() => setCrew(2)} className={`transition-all duration-400 ${crew === 2 ? "text-xl font-bold text-[#FFBD59] p-2 " : "text-gray-400 "}`}>Mechanics</button>
+        <div className="flex flex-row gap-5 mb-6 items-center">
+          <button onClick={() => setCrew(0)} className={`transition-all duration-400  rounded-xl py-2 px-3  ${crew === 0 ? "text-xl font-bold text-[#FFBD59] bg-black" : "text-sm text-black bg-gray-300 "}`}>Founder</button>
+          <button onClick={() => setCrew(1)} className={`transition-all duration-400  rounded-xl py-2 px-3 ${crew === 1 ? "text-xl font-bold text-[#FFBD59]  bg-black" : "text-sm text-black bg-gray-300"}`}>Instructor</button>
+          <button onClick={() => setCrew(2)} className={`transition-all duration-400  rounded-xl py-2 px-3 ${crew === 2 ? "text-xl font-bold text-[#FFBD59]  bg-black" : "text-sm text-black bg-gray-300"}`}>Mechanic</button>
         </div>
-        <div>
+        <div >
           {
             crew === 0 ?
-              <div className="flex flew-row gap-3">
-                <button onClick={handlePrevCrew}>
-                  <Image src={"/icon/chev_left.svg"} alt={""} width={40} height={40} />
-                </button>
-                <div className="relative w-44 h-56 border">
-                  <Image src={"/coming_soon.png"} alt={""} fill
+              <div className="flex flew-row gap-10 mt-[52px]">
+                <div className="relative w-36 h-48 tablet:w-[288px] tablet:h-[380px]  shadow-2xl rounded-2xl animate-fadeIn">
+                  <Image className="rounded-2xl" src={"/coming_soon.png"} alt={""} fill
                     style={{ objectFit: 'cover' }} />
                 </div>
-                <button onClick={handleNextCrew}>
-                  <Image src={"/icon/chev_right.svg"} alt={""} width={40} height={40} />
-                </button>
               </div> :
               crew === 1 ?
-                <div className="flex flew-row gap-3">
-                  <button onClick={handlePrevCrew}>
-                    <Image src={"/icon/chev_left.svg"} alt={""} width={40} height={40} />
-                  </button>
-                  <div className="grid grid-cols-2 tablet:flex tablet:flew-row gap-3">
-                    <div className="relative w-36 h-48 tablet:w-44 tablet:h-56 border">
-                      <Image src={"/coming_soon.png"} alt={""} fill
+                <div className="flex flex-col gap-6">
+                  <div className="self-center justify-center tablet:text-xl font-semibold text-gray-500">Instruction: $55 / hr</div>
+                  <div className="grid grid-cols-2 tablet:flex tablet:flew-row gap-10">
+                    <div className="relative w-36 h-48 tablet:w-[288px] tablet:h-[380px] shadow-2xl rounded-2xl animate-fadeIn">
+                      <Image className="rounded-2xl" src={"/coming_soon.png"} alt={""} fill
                         style={{ objectFit: 'cover' }} />
                     </div>
-                    <div className="relative w-36 h-48 tablet:w-44 tablet:h-56 border">
-                      <Image src={"/coming_soon.png"} alt={""} fill
+                    <div className="relative w-36 h-48 tablet:w-[288px] tablet:h-[380px]  shadow-2xl rounded-2xl animate-fadeIn">
+                      <Image className="rounded-2xl" src={"/coming_soon.png"} alt={""} fill
                         style={{ objectFit: 'cover' }} />
                     </div>
-                    <div className="relative w-36 h-48 tablet:w-44 tablet:h-56 border">
-                      <Image src={"/coming_soon.png"} alt={""} fill
+                    <div className="relative w-36 h-48 tablet:w-[288px] tablet:h-[380px] shadow-2xl rounded-2xl animate-fadeIn">
+                      <Image className="rounded-2xl" src={"/coming_soon.png"} alt={""} fill
                         style={{ objectFit: 'cover' }} />
                     </div>
                   </div>
-                  <button onClick={handleNextCrew}>
-                    <Image src={"/icon/chev_right.svg"} alt={""} width={40} height={40} />
-                  </button>
                 </div> :
-                <div className="flex flew-row gap-3">
-                  <button onClick={handlePrevCrew}>
-                    <Image src={"/icon/chev_left.svg"} alt={""} width={40} height={40} />
-                  </button>
-                  <div className="grid grid-cols-2 tablet:flex tablet:flew-row gap-3">
-                    <div className="relative w-36 h-48 tablet:w-44 tablet:h-56 border">
-                      <Image src={"/coming_soon.png"} alt={""} fill
+                <div className="flex flew-row gap-3 mt-[52px]">
+                  <div className="grid grid-cols-2 tablet:flex tablet:flew-row gap-10">
+                    <div className="relative w-36 h-48 tablet:w-[288px] tablet:h-[380px]  shadow-2xl rounded-2xl animate-fadeIn">
+                      <Image className="rounded-2xl" src={"/coming_soon.png"} alt={""} fill
                         style={{ objectFit: 'cover' }} />
                     </div>
-                    <div className="relative w-36 h-48 tablet:w-44 tablet:h-56 border">
-                      <Image src={"/coming_soon.png"} alt={""} fill
-                        style={{ objectFit: 'cover' }} />
-                    </div>
-                    <div className="relative w-36 h-48 tablet:w-44 tablet:h-56 border">
-                      <Image src={"/coming_soon.png"} alt={""} fill
+                    <div className="relative w-36 h-48 tablet:w-[288px] tablet:h-[380px]  shadow-2xl rounded-2xl animate-fadeIn">
+                      <Image className="rounded-2xl" src={"/coming_soon.png"} alt={""} fill
                         style={{ objectFit: 'cover' }} />
                     </div>
                   </div>
-                  <button onClick={handleNextCrew}>
-                    <Image src={"/icon/chev_right.svg"} alt={""} width={40} height={40} />
-                  </button>
                 </div>
           }
         </div>

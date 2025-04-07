@@ -84,7 +84,6 @@ export default function PlaneItems({ images, odd, comingSoon }: PlaneDetails) {
                 <div className="tablet:text-xl font-semibold text-gray-500">Lycoming O-235-L2C (115HP)</div>
                 <div className="tablet:text-xl font-semibold text-gray-500">Flight Rule: IFR</div>
                 <div className="tablet:text-xl font-semibold text-gray-500">Price: $120 /hr (Wet)</div>
-                <div className="tablet:text-xl font-semibold text-gray-500">Instructor: $55 / hr</div>
                 <div className="tablet:text-xl font-semibold text-gray-500">The Cessna 152 is a reliable, fuel-efficient two-seat trainer, perfect for safe and affordable flight training.</div>
               </article >
             </div>
@@ -96,7 +95,7 @@ export default function PlaneItems({ images, odd, comingSoon }: PlaneDetails) {
                 <div className="tablet:text-xl font-semibold text-gray-500">Lycoming O-235-L2C (115HP)</div>
                 <div className="tablet:text-xl font-semibold text-gray-500">Flight Rule: IFR</div>
                 <div className="tablet:text-xl font-semibold text-gray-500">Price:$120 /hr (Wet)</div>
-                <div className="tablet:text-xl font-semibold text-gray-500">Instructor: $55 / hr</div>
+
                 <div className="tablet:text-xl font-semibold text-gray-500">The Cessna 152 is a reliable, fuel-efficient two-seat trainer, perfect for safe and affordable flight training.</div>
               </article >
               <section className="relative flex flex-row justify-center items-center tablet:w-[480px] h-[18rem] rounded-xl shadow-2xl ">
