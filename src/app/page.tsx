@@ -61,7 +61,7 @@ export default function Home() {
           <div className="hover:text-[#FFBD59]" onClick={scrollToSectionAirCraft}>Aircrafts</div>
           <div className="hover:text-[#FFBD59]" onClick={scrollToSectionCrew}>Our Crew</div>
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
-          <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/contact')} >Contact Us</button>
+          <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/inquiries')} >Contact Us</button>
         </div>
       </section>
       <section className="fixed z-30 bg-white  tablet:hidden flex flex-row justify-between items-center w-full px-3 p-2 left-0 top-0">
@@ -81,7 +81,7 @@ export default function Home() {
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSectionAirCraft}>Aircrafts</div>
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSectionCrew}>Our Crew</div>
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
-              <button className="text-xl  py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/contact')} >Contact Us</button>
+              <button className="text-xl  py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/inquiries')} >Contact Us</button>
             </div>
           </div>
         }
@@ -91,7 +91,7 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center size-full gap-3">
           <div className="text-5xl tablet:text-6xl font-bold">Learn to Fly</div>
           <div className="text-2xl  text-center tablet:text-4xl">in a way that is quick, easy, and efficient</div>
-          <button className="py-2 bg-[#FFBD59] text-black font-semibold px-3 rounded-xl mt-5" onClick={() => router.push('/contact')}>
+          <button className="py-2 bg-[#FFBD59] text-black font-semibold px-3 rounded-xl mt-5" onClick={() => router.push('/inquiries')}>
             Contact Us
           </button>
         </div>

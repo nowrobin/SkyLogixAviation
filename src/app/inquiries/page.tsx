@@ -1,6 +1,6 @@
 'use client'
 
-import ContactForm from "@/app/contact/components/forms/ContactForm"
+import ContactForm from "@/app/inquiries/components/forms/ContactForm"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -20,7 +20,7 @@ export default function ContactPage() {
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
           {/* <div>Become A Pilot</div> */}
           {/* <div>About Us</div> */}
-          <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59] ">Contact Us</button>
+          <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]">Contact Us</button>
         </div>
       </section >
       <section className="absolute  tablet:static w-full -z-10 tablet:z-0 tablet:flex tablet:w-1/2">
