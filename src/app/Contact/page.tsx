@@ -1,6 +1,6 @@
 'use client'
 
-import ContactForm from "@/app/components/forms/ContactForm"
+import ContactForm from "@/app/contact/components/forms/ContactForm"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
