@@ -17,7 +17,7 @@ export default function ContactPage() {
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')} >Home</div>
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')}>Aircrafts</div>
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')}>Our Crew</div>
-          <div className="hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
+          <div className="hover:text-[#FFBD59]" onClick={() => router.push('/becomepilot')}>Become A Pilot</div>
           {/* <div>Become A Pilot</div> */}
           {/* <div>About Us</div> */}
           <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]">Contact Us</button>

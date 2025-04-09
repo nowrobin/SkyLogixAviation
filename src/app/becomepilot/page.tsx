@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
-export default function About() {
+export default function BecomePilot() {
   const router = useRouter()
   return (
     <div className="relative flex flex-row w-screen h-screen justify-center gap-10 pt-30">
@@ -15,7 +15,7 @@ export default function About() {
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')} >Home</div>
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')}>Aircrafts</div>
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/')}>Our Crew</div>
-          <div className="hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
+          <div className="hover:text-[#FFBD59]" onClick={() => router.push('/becomepilot')}>Become A Pilot</div>
           <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/inquiries')}>Contact Us</button>
         </div>
       </section >

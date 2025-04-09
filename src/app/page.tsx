@@ -60,7 +60,7 @@ export default function Home() {
           <div className="hover:text-[#FFBD59]" onClick={handleTopClick}>Home</div>
           <div className="hover:text-[#FFBD59]" onClick={scrollToSectionAirCraft}>Aircrafts</div>
           <div className="hover:text-[#FFBD59]" onClick={scrollToSectionCrew}>Our Crew</div>
-          <div className="hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
+          <div className="hover:text-[#FFBD59]" onClick={() => router.push('/becomepilot')}>Become A Pilot</div>
           <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/inquiries')} >Contact Us</button>
         </div>
       </section>
@@ -80,7 +80,7 @@ export default function Home() {
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={handleTopClick}>Home</div>
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSectionAirCraft}>Aircrafts</div>
               <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={scrollToSectionCrew}>Our Crew</div>
-              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={() => router.push('/about')}>About us</div>
+              <div className="hover:text-[#FFBD59]" onClick={() => router.push('/becomepilot')}>Become A Pilot</div>
               <button className="text-xl  py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/inquiries')} >Contact Us</button>
             </div>
           </div>
