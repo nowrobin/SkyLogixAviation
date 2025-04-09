@@ -2,12 +2,14 @@
 
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function BecomePilot() {
   const router = useRouter()
+  const [btnOpen, setBtnOpen] = useState(false)
   return (
-    <div className="relative flex flex-row w-screen h-screen justify-center gap-10 pt-30">
-      <section className="fixed top-0 z-30 bg-white flex flex-row justify-between items-center w-full px-3 p-2" >
+    <div className="relative flex flex-col tablet:flex-row tablet:mt-0 px-4 tablet:px-0 w-screen h-auto tablet:h-screen justify-center gap-10 pt-20 tablet:pt-30 pb-10 tablet:pb-0">
+      <section className="fixed top-0 left-0 z-30 bg-white flex flex-row justify-between items-center w-full px-3 p-2" >
         <div onClick={() => router.push('/')} >
           <Image src={"/fullLogo.png"} alt={""} width={240} height={40} />
         </div>
@@ -18,6 +20,28 @@ export default function BecomePilot() {
           <div className="hover:text-[#FFBD59]" onClick={() => router.push('/becomepilot')}>Become A Pilot</div>
           <button className="py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/inquiries')}>Contact Us</button>
         </div>
+      </section >
+      <section className="fixed z-30 bg-white  tablet:hidden flex flex-row justify-between items-center w-full px-3 p-2 left-0 top-0">
+        <div onClick={() => router.push('/')}  >
+          <Image src={"/fullLogo.png"} alt={""} width={180} height={20} />
+        </div>
+        <div onClick={() => setBtnOpen(!btnOpen)}>
+          <Image src={"/icon/icon_menu_yellow.svg"} alt={""} width={32} height={32} />
+        </div>
+        {btnOpen &&
+          <div className={`fixed tablet:hidden z-20 top-0 right-0 bg-white w-6/8 h-full transform transition-transform duration-500 ease-in-out ${btnOpen ? 'translate-0' : 'translate-x-full'}`}>
+            <div className="flex justify-end m-3" onClick={() => setBtnOpen(!btnOpen)}>
+              <Image src={"/icon/icon_x.svg"} alt={""} width={32} height={32} />
+            </div>
+            <div className="flex flex-col  gap-3 justify-center items-center text-gray-600 font-semibold cursor-default ">
+              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={() => router.push('/')}>Home</div>
+              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={() => router.push('/')}>Aircrafts</div>
+              <div className="text-xl w-full border flex justify-center py-2 hover:text-[#FFBD59]" onClick={() => router.push('/')}>Our Crew</div>
+              <div className="hover:text-[#FFBD59]" onClick={() => router.push('/becomepilot')}>Become A Pilot</div>
+              <button className="text-xl  py-2 bg-[#FFBD59] text-black px-3 rounded-xl hover:bg-black hover:text-[#FFBD59]" onClick={() => router.push('/inquiries')} >Contact Us</button>
+            </div>
+          </div>
+        }
       </section >
       <Image className="absolute -z-10 opacity-40" src={"/backPrint.png"} alt={""} fill />
       <section className="flex flex-col bg-gray-400/80 h-fit px-8 py-4 rounded-2xl gap-3">
