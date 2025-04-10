@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+
+model Post {
+  id      Int      @id @default(autoincrement())
+  modelName   String
+  comments String
+  planeFullName String
+  planeDetail String
+  flightRule String
+  price String
+  planeCode String
+  createdAt DateTime @default(now())
+  authorId  String
+  images String[]
+  author    Admin     @relation(fields: [authorId], references: [id])
+}
+
+model Crews{
+    id      Int      @id @default(autoincrement())
+    role  String
+    createdAt DateTime @default(now())
+    workingSince DateTime @default(now())
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  password  String
+  role      Boolean  @default(false)
+  isAdmin   Boolean  @default(false) // ✅ 어드민 여부
+  posts     Post[]
+}

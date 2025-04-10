@@ -15,7 +15,6 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('Sending...');
-
     const res = await fetch('/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -25,8 +24,12 @@ export default function ContactForm() {
     if (res.ok) {
       setStatus('Successful!');
       setSent(true)
-      alert("Sussecegfull sent!!!")
-    } else {
+      alert("Succesfully sent!!!")
+    } else if (res.status === 504) {
+      setSent(true)
+      alert(`Sussefully sent to Us but`);
+    }
+    else {
       setSent(true)
       alert(`Failed to Send Email Please Contact Us Directly`);
       setStatus(`Failed to Send Email Please Contact Us Directly`);
@@ -34,7 +37,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto w-[520px]">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto w-[520px] tablet:px-0 px-4">
       <div className='pl-4'>Name<span className='text-red-500'>*</span></div>
       <input className='bg-gray-300 p-2 pl-4 text-black rounded-xl ring-0 outline-0' type="text" name="name" placeholder="name" onChange={handleChange} required />
       <div className='pl-4'>Email<span className='text-red-500'>*</span></div>

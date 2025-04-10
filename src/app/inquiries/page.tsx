@@ -52,20 +52,20 @@ export default function ContactPage() {
         </div>
       </section>
       <section className="tablet:absolute  flex flex-col tablet:w-1/2 self-center px-10">
-        <div className="flex flex-col p-8 tablet:p-14 tablet:mt-0 gap-4  rounded-3xl  bg-white/50 mt-20 font-medium">
-          <div className=" flex flex-row text-2xl">
+        <div className="flex flex-col p-6 tablet:p-14 tablet:mt-0 gap-4  rounded-3xl  bg-white/50 mt-20 font-medium">
+          <div className=" flex flex-row text-xl tablet:text-2xl ">
             Have questions about flight training, scheduling, or our programs? We’re here to help! Whether you’re ready to start your journey toward becoming a pilot or just need more information, feel free to reach out.
           </div>
-          <div className="flex flex-row gap-4 pl-8">
+          <div className="flex flex-row  gap-2 tablet:gap-4 tablet:pl-8">
             <Image src={'/icon/icon_Map.svg'} alt="" width={24} height={24} />
             Location: 1395 Fairplex Dr. Hangar A-6,  La Verne, CA 91750
           </div>
-          <div className="flex flex-row  gap-4 pl-8">
+          <div className="flex flex-row gap-2 tablet:gap-4 tablet:pl-8">
             <Image src={'/icon/icon_Phone.svg'} alt="" width={24} height={24} /> Phone: (562) 266-6868
           </div>
-          <div className="flex flex-row gap-4 pl-8">
+          <div className="flex flex-row gap-2 tablet:gap-4 tablet:pl-8">
             <Image src={'/icon/icon_Mail.svg'} alt="" width={24} height={24} /> Email: info@skylogixaviation.com</div>
-          <div className="flex flex-row gap-4 pl-8">
+          <div className="flex flex-row gap-2 tablet:gap-4 tablet:pl-8">
             <Image src={'/icon/icon_Clock.svg'} alt="" width={24} height={24} /> Hours: Mon-Fri 09:00 am - 04:00 pm
           </div>
         </div>
