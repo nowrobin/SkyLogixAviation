@@ -54,7 +54,7 @@ export default function BecomePilot() {
   const router = useRouter()
   const [btnOpen, setBtnOpen] = useState(false)
   return (
-    <div className="relative flex flex-col tablet:px-0 w-screen h-auto tablet:h-screen justify-center pt-10 tablet:my-54 pb-10 tablet:pb-0">
+    <div className="relative flex flex-col tablet:px-0 w-screen h-auto justify-center pt-10 tablet:pt-16 pb-10 tablet:pb-0 items-center">
       <section className="fixed top-0 left-0 z-30 hidden tablet:flex bg-white  flex-row justify-between items-center w-full h-16 px-3 p-2" >
         <div onClick={() => router.push('/')} >
           <Image src={"/fullLogo.png"} alt={""} width={240} height={40} />
@@ -111,9 +111,9 @@ export default function BecomePilot() {
         )}
       </section>
       {/* <Image className="absolute -z-10 opacity-40" src={"/backPrint.png"} alt={""} fill /> */}
-      <div className="flex font-semibold tablet:px-30 tablet:pt-4 tablet:text-2xl text-center p-4">At Skylogix Aviation, we’re more than just a flight school—we’re your launchpad to the airlines. Here’s a step-by-step guide with visual cues to help you see where you’re headed</div>
-
-      <div className="py-2 px-4 tablet:px-32 tablet:py-4 mx-auto grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-gray-200">
+      <Image src={"/plane_Image.jpg"} alt={""} fill className="absolute -z-10 opacity-40"></Image>
+      <div className="flex font-semibold tablet:px-10 tablet:pt-4 tablet:text-2xl text-center p-4 bg-gray-500/40 tablet:mt-2 mt-6 w-fit mx-8 tablet:w-2/3 rounded-2xl">At Skylogix Aviation, we’re more than just a flight school—we’re your launchpad to the airlines. Here’s a step-by-step guide with visual cues to help you see where you’re headed</div>
+      <div className="py-2 px-4 tablet:px-32 tablet:py-4 mx-auto grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-transparent">
         {cardData.map((card, index) => (
           <div
             key={index}
@@ -146,9 +146,8 @@ export default function BecomePilot() {
           </div>
         ))}
       </div>
-
       {/* CTA */}
-      <div className="bg-white text-center p-6 max-w-3xl mx-auto">
+      <div className="bg-white text-center p-6 w-2/3 rounded-2xl mx-auto mb-4">
         <h2 className="text-2xl font-bold mb-2 flex justify-center items-center">
           <span className="text-3xl mr-2">🚀</span> Ready to Take Off?
         </h2>
