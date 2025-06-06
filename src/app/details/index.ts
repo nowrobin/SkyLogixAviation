@@ -45,7 +45,7 @@ export const plaenDetails = [
       "/N25976/N25976_5.jpeg",
     ],
     details: [
-      "1980 Cessna 152 II",
+      "1978 Cessna 152 II",
       "Lycoming O-235-L2C (115HP)",
       "Flight Rule: IFR",
       "Price: $120 /hr (Wet)",
