@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import TrainingContent from "./_components/TrainingContent";
 import { FlightSchoolJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/constants";
+import { readTraining, readCompany } from "@/lib/admin/dal";
 
 export const metadata: Metadata = {
   title: "Become A Pilot - Flight Training Programs",
@@ -19,17 +20,27 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TrainingPage() {
+export default async function TrainingPage() {
+  const [trainingData, companyData] = await Promise.all([
+    readTraining(),
+    readCompany(),
+  ]);
+
   return (
     <>
-      <FlightSchoolJsonLd />
+      <FlightSchoolJsonLd companyData={companyData} />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", url: SITE_URL },
           { name: "Become A Pilot", url: `${SITE_URL}/training` },
         ]}
       />
-      <TrainingContent />
+      <TrainingContent
+        trainingIntro={trainingData.intro}
+        trainingSteps={trainingData.steps}
+        trainingCta={trainingData.cta}
+        companyAirport={companyData.location.airport}
+      />
     </>
   );
 }

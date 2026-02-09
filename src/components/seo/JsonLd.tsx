@@ -1,7 +1,8 @@
-import { company } from "@/data/company";
 import { SITE_URL } from "@/lib/constants";
+import type { CompanyData } from "@/components/layout/LayoutContent";
 
-export function LocalBusinessJsonLd() {
+export function LocalBusinessJsonLd({ companyData }: { companyData: CompanyData }) {
+  const company = companyData;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -72,7 +73,8 @@ export function LocalBusinessJsonLd() {
   );
 }
 
-export function FlightSchoolJsonLd() {
+export function FlightSchoolJsonLd({ companyData }: { companyData: CompanyData }) {
+  const company = companyData;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",

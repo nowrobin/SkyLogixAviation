@@ -6,15 +6,16 @@ import Button from "@/components/ui/Button";
 import ImageGallery from "@/components/ui/ImageGallery";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/constants";
-import { fleet } from "@/data/fleet";
+import { readFleet, readFleetById } from "@/lib/admin/dal";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const fleet = await readFleet();
   return fleet.map((plane) => ({ id: plane.id }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const plane = fleet.find((p) => p.id === id);
+  const plane = await readFleetById(id);
   if (!plane) return {};
 
   return {
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function FleetDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const plane = fleet.find((p) => p.id === id);
+  const plane = await readFleetById(id);
 
   if (!plane) return notFound();
 

@@ -5,7 +5,7 @@ import Container from "@/components/ui/Container";
 import ImageGallery from "@/components/ui/ImageGallery";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/constants";
-import { fleet } from "@/data/fleet";
+import { readFleet } from "@/lib/admin/dal";
 
 export const metadata: Metadata = {
   title: "Our Fleet - Cessna 152 Aircraft",
@@ -22,7 +22,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function FleetPage() {
+export default async function FleetPage() {
+  const fleet = await readFleet();
+
   return (
     <div>
       <BreadcrumbJsonLd

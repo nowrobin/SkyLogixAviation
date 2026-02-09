@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import InquiriesContent from "./_components/InquiriesContent";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/constants";
+import { readContact, readCompany } from "@/lib/admin/dal";
 
 export const metadata: Metadata = {
   title: "Contact Us - Flight Training Inquiries",
@@ -19,7 +20,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function InquiriesPage() {
+export default async function InquiriesPage() {
+  const [contactData, companyData] = await Promise.all([
+    readContact(),
+    readCompany(),
+  ]);
+
   return (
     <>
       <BreadcrumbJsonLd
@@ -28,7 +34,7 @@ export default function InquiriesPage() {
           { name: "Contact Us", url: `${SITE_URL}/inquiries` },
         ]}
       />
-      <InquiriesContent />
+      <InquiriesContent contactData={contactData} companyData={companyData} />
     </>
   );
 }

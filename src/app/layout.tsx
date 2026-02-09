@@ -3,9 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import LayoutContent from "@/components/layout/LayoutContent";
 import { SITE_URL, SITE_NAME } from "@/lib/constants";
+import { readNavigation, readCompany } from "@/lib/admin/dal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,19 +90,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [navData, companyData] = await Promise.all([
+    readNavigation(),
+    readCompany(),
+  ]);
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <LayoutContent navData={navData} companyData={companyData}>
+          {children}
+        </LayoutContent>
         <Analytics />
         <SpeedInsights />
       </body>

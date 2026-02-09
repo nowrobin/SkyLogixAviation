@@ -5,8 +5,27 @@ import { useEffect, useRef } from "react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { trainingIntro, trainingSteps, trainingCta } from "@/data/training";
-import { company } from "@/data/company";
+interface TrainingStepData {
+  id: string;
+  order: number;
+  title: string;
+  abbreviation: string;
+  icon: string;
+  description: string;
+  accentColor: string;
+  accentBg: string;
+  accentText: string;
+  requirements: string[];
+  learns: string[];
+  learnsLabel: string;
+}
+
+interface TrainingContentProps {
+  trainingIntro: string;
+  trainingSteps: TrainingStepData[];
+  trainingCta: { title: string; icon: string; description: string; location: string } | null;
+  companyAirport: string;
+}
 
 function AnimatedSection({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -23,7 +42,7 @@ function AnimatedSection({ children, className = "" }: { children: React.ReactNo
   return <div ref={ref} className={`animate-on-scroll ${className}`}>{children}</div>;
 }
 
-export default function TrainingContent() {
+export default function TrainingContent({ trainingIntro, trainingSteps, trainingCta, companyAirport }: TrainingContentProps) {
   return (
     <div>
       {/* ── Hero ── */}
@@ -170,10 +189,10 @@ export default function TrainingContent() {
         <div className="absolute inset-0 bg-navy-900/75" />
         <Container className="relative z-10 text-center">
           <AnimatedSection>
-            <div className="text-5xl mb-4">{trainingCta.icon}</div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">{trainingCta.title}</h2>
-            <p className="text-navy-200 text-lg mb-2 max-w-xl mx-auto">{trainingCta.description}</p>
-            <p className="text-navy-400 text-sm mb-8">📍 {company.location.airport}</p>
+            <div className="text-5xl mb-4">{trainingCta?.icon}</div>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">{trainingCta?.title}</h2>
+            <p className="text-navy-200 text-lg mb-2 max-w-xl mx-auto">{trainingCta?.description}</p>
+            <p className="text-navy-400 text-sm mb-8">📍 {companyAirport}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button href="/inquiries" size="lg">Contact Us</Button>
               <Button href="/fleet" variant="outline" size="lg">View Our Fleet</Button>

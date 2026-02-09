@@ -4,10 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { navItems, navCta, NavItem } from "@/data/navigation";
+import type { NavData } from "./LayoutContent";
 import Button from "@/components/ui/Button";
 
-export default function Header() {
+interface NavItem {
+  label: string;
+  href: string;
+  scrollTo?: string;
+}
+
+export default function Header({ navData }: { navData: NavData }) {
+  const { navItems, navCta } = navData;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -71,9 +78,11 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          <Button href={navCta.href} size="sm">
-            {navCta.label}
-          </Button>
+          {navCta && (
+            <Button href={navCta.href} size="sm">
+              {navCta.label}
+            </Button>
+          )}
         </nav>
 
         {/* Mobile Hamburger */}
@@ -125,11 +134,13 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-              <div className="mt-4">
-                <Button href={navCta.href} size="lg" className="w-full">
-                  {navCta.label}
-                </Button>
-              </div>
+              {navCta && (
+                <div className="mt-4">
+                  <Button href={navCta.href} size="lg" className="w-full">
+                    {navCta.label}
+                  </Button>
+                </div>
+              )}
             </div>
           </nav>
         </div>

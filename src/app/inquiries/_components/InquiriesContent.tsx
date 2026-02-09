@@ -2,12 +2,22 @@
 
 import Image from "next/image";
 import Container from "@/components/ui/Container";
-import { contactPage, contactForm } from "@/data/contact";
-import { company } from "@/data/company";
 import { useState } from "react";
+import type { CompanyData } from "@/components/layout/LayoutContent";
+
+interface ContactData {
+  contactPage: { intro: string };
+  contactForm: {
+    fields: { name: string; label: string; type: string; placeholder: string; required: boolean }[];
+    submitButton: { default: string; sending: string; success: string; alreadySent: string };
+    alerts: { success: string; error: string };
+  };
+}
 import Button from "@/components/ui/Button";
 
-export default function InquiriesContent() {
+export default function InquiriesContent({ contactData, companyData }: { contactData: ContactData; companyData: CompanyData }) {
+  const { contactPage, contactForm } = contactData;
+  const company = companyData;
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 

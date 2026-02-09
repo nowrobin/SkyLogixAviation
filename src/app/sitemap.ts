@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
-import { fleet } from "@/data/fleet";
+import { readFleet } from "@/lib/admin/dal";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const fleet = await readFleet();
+
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: SITE_URL,

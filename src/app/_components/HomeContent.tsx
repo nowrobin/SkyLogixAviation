@@ -8,10 +8,7 @@ import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Card from "@/components/ui/Card";
 import ImageGallery from "@/components/ui/ImageGallery";
-import { hero, welcome } from "@/data/home";
-import { fleet } from "@/data/fleet";
-import { company } from "@/data/company";
-import { crewCategories, crew } from "@/data/crew";
+import type { CompanyData } from "@/components/layout/LayoutContent";
 
 function useScrollAnimation() {
   const ref = useRef<HTMLDivElement>(null);
@@ -39,7 +36,36 @@ function AnimatedSection({ children, className = "" }: { children: React.ReactNo
   );
 }
 
-export default function HomeContent() {
+interface AircraftData {
+  id: string;
+  name: string;
+  year: number;
+  model: string;
+  engine: string;
+  horsepower: number;
+  flightRule: string;
+  pricePerHour: string;
+  description: string;
+  images: string[];
+}
+
+interface CrewMemberData {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+}
+
+interface HomeContentProps {
+  hero: { title: string; subtitle: string; cta: string };
+  welcome: { title: string; description: string };
+  fleet: AircraftData[];
+  company: CompanyData;
+  crewCategories: { key: string; label: string }[];
+  crewMembers: Record<string, CrewMemberData[]>;
+}
+
+export default function HomeContent({ hero, welcome, fleet, company, crewCategories, crewMembers }: HomeContentProps) {
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
     if (hash) {
@@ -207,7 +233,7 @@ export default function HomeContent() {
                   )}
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {crew[cat.key].map((member) => (
+                  {(crewMembers[cat.key] || []).map((member) => (
                     <div key={member.id} className="text-center">
                       <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-lg mb-3">
                         <Image src={member.image} alt={member.name} fill className="object-cover" />

@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { company } from "@/data/company";
-import { navItems } from "@/data/navigation";
+import type { NavData, CompanyData } from "./LayoutContent";
 import Container from "@/components/ui/Container";
 
-export default function Footer() {
+export default function Footer({ navData, companyData }: { navData: NavData; companyData: CompanyData }) {
+  const { navItems } = navData;
+  const company = companyData;
+
   return (
     <footer className="bg-navy-900 text-white">
       <Container className="py-16">

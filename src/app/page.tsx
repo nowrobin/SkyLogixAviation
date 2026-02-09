@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import HomeContent from "./_components/HomeContent";
 import { LocalBusinessJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL, SITE_NAME } from "@/lib/constants";
+import { readHome, readFleet, readCompany, readCrew } from "@/lib/admin/dal";
 
 export const metadata: Metadata = {
   title: `${SITE_NAME} | Learn to Fly at Brackett Field (KPOC)`,
@@ -19,11 +20,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [homeData, fleetData, companyData, crewData] = await Promise.all([
+    readHome(),
+    readFleet(),
+    readCompany(),
+    readCrew(),
+  ]);
+
   return (
     <>
-      <LocalBusinessJsonLd />
-      <HomeContent />
+      <LocalBusinessJsonLd companyData={companyData} />
+      <HomeContent
+        hero={homeData.hero}
+        welcome={homeData.welcome}
+        fleet={fleetData}
+        company={companyData}
+        crewCategories={crewData.categories}
+        crewMembers={crewData.members}
+      />
     </>
   );
 }
