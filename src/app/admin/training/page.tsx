@@ -1,10 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { useAdminData } from "../_hooks/useAdminData";
 import AdminFormField from "../_components/AdminFormField";
 import AdminCard from "../_components/AdminCard";
 import AdminAlert from "../_components/AdminAlert";
 import AdminArrayField from "../_components/AdminArrayField";
+import AdminPreviewToggle from "../_components/AdminPreviewToggle";
+import PreviewFrame from "../_components/PreviewFrame";
+import TrainingPreview from "../_components/previews/TrainingPreview";
 
 interface TrainingStep {
   id: string;
@@ -35,6 +39,7 @@ interface TrainingData {
 export default function TrainingPage() {
   const { data, loading, saving, error, success, setData, save, clearMessages } =
     useAdminData<TrainingData>({ endpoint: "/api/admin/data/training" });
+  const [mode, setMode] = useState<"edit" | "preview">("edit");
 
   if (loading) {
     return (
@@ -123,6 +128,31 @@ export default function TrainingPage() {
         />
       )}
 
+      {/* Mode toggle */}
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-gray-500">
+          {mode === "preview" ? "Changes update the preview in real-time" : "Edit content below"}
+        </p>
+        <AdminPreviewToggle mode={mode} onChange={setMode} />
+      </div>
+
+      {mode === "preview" ? (
+        <>
+          <PreviewFrame>
+            <TrainingPreview data={data} />
+          </PreviewFrame>
+          <div className="flex justify-end">
+            <button
+              onClick={() => save()}
+              disabled={saving}
+              className="rounded-lg bg-navy-900 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navy-800 disabled:opacity-50"
+            >
+              {saving ? "Saving..." : "Save Changes"}
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
       <AdminCard title="Introduction">
         <AdminFormField
           label="Intro Text"
@@ -202,6 +232,8 @@ export default function TrainingPage() {
           {saving ? "Saving..." : "Save Changes"}
         </button>
       </div>
+        </>
+      )}
     </div>
   );
 }

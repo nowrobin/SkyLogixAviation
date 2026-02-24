@@ -7,6 +7,9 @@ import AdminCard from "../_components/AdminCard";
 import AdminAlert from "../_components/AdminAlert";
 import AdminArrayField from "../_components/AdminArrayField";
 import AdminImageUpload from "../_components/AdminImageUpload";
+import AdminPreviewToggle from "../_components/AdminPreviewToggle";
+import PreviewFrame from "../_components/PreviewFrame";
+import CrewPreview from "../_components/previews/CrewPreview";
 
 interface CrewMember {
   id: string;
@@ -31,6 +34,7 @@ export default function CrewPage() {
   const { data, loading, saving, error, success, setData, save, clearMessages } =
     useAdminData<CrewData>({ endpoint: "/api/admin/data/crew" });
   const [activeTab, setActiveTab] = useState(0);
+  const [mode, setMode] = useState<"edit" | "preview">("edit");
 
   if (loading) {
     return (
@@ -147,7 +151,7 @@ export default function CrewPage() {
         />
       )}
 
-      {/* Category Tabs */}
+      {/* Category Tabs + Preview Toggle */}
       <div className="flex items-center gap-2 border-b border-gray-200">
         {data.categories.map((cat, index) => (
           <button
@@ -168,10 +172,17 @@ export default function CrewPage() {
         >
           + Category
         </button>
+        <AdminPreviewToggle mode={mode} onChange={setMode} />
       </div>
 
+      {mode === "preview" && currentCategory ? (
+        <PreviewFrame>
+          <CrewPreview category={currentCategory} members={currentMembers} />
+        </PreviewFrame>
+      ) : null}
+
       {/* Category Settings */}
-      {currentCategory && (
+      {mode === "edit" && currentCategory && (
         <AdminCard>
           <div className="flex items-end gap-4">
             <div className="flex-1">
@@ -193,7 +204,7 @@ export default function CrewPage() {
       )}
 
       {/* Members */}
-      {currentCategory && (
+      {mode === "edit" && currentCategory && (
         <>
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-medium text-gray-700">

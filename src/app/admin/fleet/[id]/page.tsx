@@ -1,12 +1,15 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 import { useAdminData } from "../../_hooks/useAdminData";
 import AdminFormField from "../../_components/AdminFormField";
 import AdminCard from "../../_components/AdminCard";
 import AdminAlert from "../../_components/AdminAlert";
 import AdminImageUpload from "../../_components/AdminImageUpload";
+import AdminPreviewToggle from "../../_components/AdminPreviewToggle";
+import PreviewFrame from "../../_components/PreviewFrame";
+import FleetPreview from "../../_components/previews/FleetPreview";
 
 interface Aircraft {
   id: string;
@@ -29,6 +32,7 @@ export default function FleetEditPage({
   const { id } = use(params);
   const { data, loading, saving, error, success, setData, save, clearMessages } =
     useAdminData<Aircraft>({ endpoint: `/api/admin/data/fleet/${id}` });
+  const [mode, setMode] = useState<"edit" | "preview">("edit");
 
   if (loading) {
     return (
@@ -72,12 +76,15 @@ export default function FleetEditPage({
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <div className="flex items-center gap-2 text-sm text-gray-500">
-        <Link href="/admin/fleet" className="hover:text-gray-700">
-          Fleet
-        </Link>
-        <span>/</span>
-        <span className="text-gray-900">{data.name || id}</span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <Link href="/admin/fleet" className="hover:text-gray-700">
+            Fleet
+          </Link>
+          <span>/</span>
+          <span className="text-gray-900">{data.name || id}</span>
+        </div>
+        <AdminPreviewToggle mode={mode} onChange={setMode} />
       </div>
 
       {(error || success) && (
@@ -88,6 +95,12 @@ export default function FleetEditPage({
         />
       )}
 
+      {mode === "preview" ? (
+        <PreviewFrame>
+          <FleetPreview data={data} />
+        </PreviewFrame>
+      ) : (
+        <>
       <AdminCard title="Basic Info">
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -148,6 +161,9 @@ export default function FleetEditPage({
           </button>
         </div>
       </AdminCard>
+
+        </>
+      )}
 
       <div className="flex justify-end gap-3">
         <Link
