@@ -3,14 +3,20 @@ import { SITE_URL } from "@/lib/constants";
 import { readFleet } from "@/lib/admin/dal";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const fleet = await readFleet();
+  const fleet = await readFleet().catch(() => []);
 
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: SITE_URL,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 1,
+      priority: 1.0,
+    },
+    {
+      url: `${SITE_URL}/training`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.95,
     },
     {
       url: `${SITE_URL}/fleet`,
@@ -19,10 +25,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/training`,
+      url: `${SITE_URL}/becomepilot`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.9,
+      priority: 0.85,
     },
     {
       url: `${SITE_URL}/inquiries`,
@@ -35,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const fleetPages: MetadataRoute.Sitemap = fleet.map((plane) => ({
     url: `${SITE_URL}/fleet/${plane.id}`,
     lastModified: new Date(),
-    changeFrequency: "monthly",
+    changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 

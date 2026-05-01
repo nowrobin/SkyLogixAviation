@@ -20,52 +20,72 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Flight Training at Brackett Field (KPOC)`,
+    default: `${SITE_NAME} | Flight School in La Verne, CA — Brackett Field (KPOC)`,
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Affordable, high-quality flight training at Brackett Field (KPOC) in La Verne, CA. Cessna 152 rentals at $120/hr and professional flight instruction at $55/hr.",
+    "Learn to fly at Skylogix Aviation — FAA-certified flight school at Brackett Field (KPOC), La Verne, CA. Cessna 152 rentals from $120/hr. Private Pilot, IFR, Commercial, CFI & ATP training. Serving Los Angeles, Inland Empire, Pomona Valley.",
   keywords: [
-    "flight training",
-    "flight school",
-    "Brackett Field",
-    "KPOC",
-    "Cessna 152",
-    "learn to fly",
-    "pilot training",
-    "La Verne CA",
-    "private pilot license",
-    "PPL",
-    "instrument rating",
-    "commercial pilot",
-    "discovery flight",
-    "affordable flight training",
+    // Hyper-local
+    "flight school La Verne CA",
+    "flight training La Verne California",
+    "flight school Pomona CA",
+    "flight school Inland Empire",
+    "flight school Los Angeles County",
+    "Brackett Field flight school",
+    "KPOC flight training",
+    "flight school near Claremont CA",
+    "flight school near Ontario CA",
+    "flight school near Upland CA",
+    "flight school near Chino CA",
+    // Intent-based
+    "learn to fly near me",
+    "flight school near me",
+    "affordable flight training Southern California",
+    "cheap flight school Los Angeles",
+    "discovery flight Los Angeles",
+    "discovery flight Inland Empire",
+    // Program-specific
+    "private pilot license California",
+    "PPL training California",
+    "instrument rating training California",
+    "commercial pilot training California",
+    "CFI training California",
+    "ATP training California",
+    "how to become a pilot California",
+    // Aircraft
+    "Cessna 152 rental California",
+    "Cessna 152 flight school",
+    // Brand
     "Skylogix Aviation",
+    "Skylogix Aviation La Verne",
   ],
-  authors: [{ name: SITE_NAME }],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "Flight School",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | Learn to Fly at Brackett Field`,
+    title: `${SITE_NAME} | Flight School at Brackett Field — La Verne, CA`,
     description:
-      "Your journey to the skies starts here. Affordable flight training with well-maintained Cessna 152 aircraft at Brackett Field (KPOC).",
+      "FAA-certified flight school at Brackett Field (KPOC). Learn to fly in Southern California from $120/hr. PPL, IFR, CPL, CFI, and ATP programs. Serving the greater Los Angeles and Inland Empire area.",
     images: [
       {
         url: "/landing_Image.png",
         width: 1200,
         height: 630,
-        alt: "Skylogix Aviation - Flight Training",
+        alt: "Skylogix Aviation — Flight School at Brackett Field (KPOC), La Verne, CA",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | Flight Training`,
+    title: `${SITE_NAME} | Learn to Fly in Southern California`,
     description:
-      "Affordable flight training at Brackett Field (KPOC). Cessna 152 rentals and professional instruction.",
+      "Affordable FAA-certified flight training at Brackett Field (KPOC), La Verne, CA. Cessna 152 from $120/hr. PPL to ATP programs.",
     images: ["/landing_Image.png"],
   },
   robots: {
@@ -81,6 +101,11 @@ export const metadata: Metadata = {
   },
   other: {
     "theme-color": "#0A1628",
+    // Geographic meta tags for local SEO
+    "geo.region": "US-CA",
+    "geo.placename": "La Verne, California",
+    "geo.position": "34.0925;-117.7834",
+    "ICBM": "34.0925, -117.7834",
   },
   icons: {
     icon: ["/favicon.ico?v=4"],
@@ -104,7 +129,7 @@ export default async function RootLayout({
   ]);
 
   return (
-    <html lang="en">
+    <html lang="en-US">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
