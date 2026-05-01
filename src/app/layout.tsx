@@ -79,6 +79,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    "theme-color": "#0A1628",
+  },
   icons: {
     icon: ["/favicon.ico?v=4"],
     apple: ["/apple-touch-icon.png?v=4"],

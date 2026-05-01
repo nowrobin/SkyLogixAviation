@@ -24,16 +24,13 @@ export default function AdminFormField({
   helpText,
 }: AdminFormFieldProps) {
   const baseClasses =
-    "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900 disabled:bg-gray-50 disabled:text-gray-500";
+    "w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 transition-colors focus:border-[#0A1628] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0A1628]/10 disabled:cursor-not-allowed disabled:opacity-50";
 
   return (
     <div>
-      <label
-        htmlFor={name}
-        className="mb-1 block text-sm font-medium text-gray-700"
-      >
+      <label htmlFor={name} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">
         {label}
-        {required && <span className="ml-1 text-red-500">*</span>}
+        {required && <span className="ml-1 text-red-400">*</span>}
       </label>
       {type === "textarea" ? (
         <textarea
@@ -45,7 +42,7 @@ export default function AdminFormField({
           rows={rows}
           required={required}
           disabled={disabled}
-          className={baseClasses}
+          className={`${baseClasses} resize-none`}
         />
       ) : (
         <input
@@ -66,7 +63,7 @@ export default function AdminFormField({
         />
       )}
       {helpText && (
-        <p className="mt-1 text-xs text-gray-400">{helpText}</p>
+        <p className="mt-1.5 text-xs text-gray-400">{helpText}</p>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import { createHmac } from "crypto";
+import bcrypt from "bcryptjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const COOKIE_NAME = "admin_session";
@@ -16,8 +17,9 @@ function getPassword(): string {
   return password;
 }
 
-export function verifyPassword(input: string): boolean {
-  return input === getPassword();
+export async function verifyPassword(input: string): Promise<boolean> {
+  const hash = Buffer.from(getPassword(), "base64").toString("utf8");
+  return bcrypt.compare(input, hash);
 }
 
 export function createSessionToken(): string {

@@ -4,14 +4,12 @@ import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import ImageGallery from "@/components/ui/ImageGallery";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
-import { SITE_URL } from "@/lib/constants";
-import { readFleet, readFleetById } from "@/lib/admin/dal";
+import { BreadcrumbJsonLd, AircraftJsonLd } from "@/components/seo/JsonLd";
+import { SITE_URL, SITE_NAME } from "@/lib/constants";
+import { readFleetById } from "@/lib/admin/dal";
 
-export async function generateStaticParams() {
-  const fleet = await readFleet();
-  return fleet.map((plane) => ({ id: plane.id }));
-}
+// All fleet pages rendered on-demand so admin changes reflect immediately
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -21,14 +19,14 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title: `${plane.name} - ${plane.year} ${plane.model}`,
     description: `${plane.year} ${plane.model} (${plane.name}) available for rent at ${plane.pricePerHour}. ${plane.engine}, ${plane.horsepower}HP, ${plane.flightRule}-rated. ${plane.description}`,
-    alternates: {
-      canonical: `${SITE_URL}/fleet/${plane.id}`,
-    },
+    alternates: { canonical: `${SITE_URL}/fleet/${plane.id}` },
     openGraph: {
-      title: `${plane.name} | Skylogix Aviation Fleet`,
-      description: `${plane.year} ${plane.model} - ${plane.pricePerHour}. IFR-rated trainer at Brackett Field.`,
+      title: `${plane.name} | ${SITE_NAME} Fleet`,
+      description: `${plane.year} ${plane.model} - ${plane.pricePerHour}. ${plane.flightRule}-rated trainer at Brackett Field.`,
       url: `${SITE_URL}/fleet/${plane.id}`,
-      images: [{ url: plane.images[0], width: 1200, height: 630, alt: `${plane.name} - ${plane.model}` }],
+      images: plane.images[0]
+        ? [{ url: plane.images[0], width: 1200, height: 630, alt: `${plane.name} - ${plane.model}` }]
+        : [],
     },
   };
 }
@@ -48,6 +46,7 @@ export default async function FleetDetailPage({ params }: { params: Promise<{ id
           { name: plane.name, url: `${SITE_URL}/fleet/${plane.id}` },
         ]}
       />
+      <AircraftJsonLd plane={plane} />
       <section className="py-12 md:py-20 bg-white">
         <Container>
           {/* Breadcrumb */}

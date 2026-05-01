@@ -45,8 +45,8 @@ export default function AdminLayout({
     return (
       <div className="flex h-screen items-center justify-center bg-gray-50">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-navy-900" />
-          <p className="text-sm text-gray-500">Loading...</p>
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-200 border-t-[#0A1628]" />
+          <p className="text-xs text-gray-400">Loading...</p>
         </div>
       </div>
     );

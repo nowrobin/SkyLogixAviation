@@ -18,7 +18,7 @@ export default function Footer({ navData, companyData }: { navData: NavData; com
               alt="Skylogix Aviation"
               width={180}
               height={32}
-              className="brightness-0 invert"
+              className="rounded-lg"
             />
             <p className="text-navy-300 text-sm leading-relaxed max-w-xs">
               Affordable, high-quality flight training at Brackett Field.

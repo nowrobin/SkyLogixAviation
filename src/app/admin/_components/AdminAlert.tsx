@@ -24,24 +24,28 @@ export default function AdminAlert({
 
   return (
     <div
-      className={`flex items-center gap-2 rounded-lg px-4 py-3 text-sm ${
+      className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm shadow-sm ${
         type === "success"
-          ? "bg-green-50 text-green-700 border border-green-200"
-          : "bg-red-50 text-red-700 border border-red-200"
+          ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+          : "bg-red-50 text-red-600 border border-red-100"
       }`}
     >
-      {type === "success" ? (
-        <svg className="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
-      ) : (
-        <svg className="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      )}
-      <span className="flex-1">{message}</span>
+      <div className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full ${
+        type === "success" ? "bg-emerald-100" : "bg-red-100"
+      }`}>
+        {type === "success" ? (
+          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
+        ) : (
+          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        )}
+      </div>
+      <span className="flex-1 font-medium">{message}</span>
       {onClose && (
-        <button onClick={onClose} className="ml-2 flex-shrink-0 opacity-60 hover:opacity-100">
+        <button onClick={onClose} className="flex-shrink-0 opacity-40 hover:opacity-70 transition-opacity">
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>

@@ -127,7 +127,9 @@ export async function writeHome(data: {
 // ── Fleet ──
 
 export async function readFleet() {
-  const rows = await prisma.aircraft.findMany({ orderBy: { createdAt: "asc" } });
+  const rows = await prisma.aircraft.findMany({
+    orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+  });
   return rows.map((r) => ({
     id: r.id,
     name: r.name,
@@ -139,7 +141,16 @@ export async function readFleet() {
     pricePerHour: r.pricePerHour,
     description: r.description,
     images: r.images,
+    order: r.order,
   }));
+}
+
+export async function reorderFleet(ids: string[]) {
+  await Promise.all(
+    ids.map((id, index) =>
+      prisma.aircraft.update({ where: { id }, data: { order: index } })
+    )
+  );
 }
 
 export async function readFleetById(id: string) {
@@ -171,7 +182,8 @@ export async function createAircraft(data: {
   description: string;
   images: string[];
 }) {
-  await prisma.aircraft.create({ data });
+  const count = await prisma.aircraft.count();
+  await prisma.aircraft.create({ data: { ...data, order: count } });
 }
 
 export async function updateAircraft(

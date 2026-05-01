@@ -4,23 +4,40 @@ import Link from "next/link";
 import Container from "@/components/ui/Container";
 import ImageGallery from "@/components/ui/ImageGallery";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
-import { SITE_URL } from "@/lib/constants";
-import { readFleet } from "@/lib/admin/dal";
+import { SITE_URL, SITE_NAME } from "@/lib/constants";
+import { readFleet, readMetadata } from "@/lib/admin/dal";
 
-export const metadata: Metadata = {
-  title: "Our Fleet - Cessna 152 Aircraft",
-  description:
-    "Explore Skylogix Aviation's fleet of well-maintained Cessna 152 aircraft. IFR-rated trainers available at $120/hr wet at Brackett Field (KPOC).",
-  alternates: {
-    canonical: `${SITE_URL}/fleet`,
-  },
-  openGraph: {
-    title: "Our Fleet | Skylogix Aviation",
-    description: "Well-maintained Cessna 152 aircraft for flight training at Brackett Field. $120/hr wet rate.",
-    url: `${SITE_URL}/fleet`,
-    images: [{ url: "/N49202/N49202_1.jpeg", width: 1200, height: 630, alt: "Skylogix Aviation Fleet" }],
-  },
-};
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const meta = await readMetadata();
+    const p = (meta.pages as Record<string, { title: string; description: string }>)["fleet"];
+    return {
+      title: p?.title || "Our Fleet - Cessna 152 Aircraft",
+      description: p?.description || "Explore Skylogix Aviation's fleet of well-maintained Cessna 152 aircraft. IFR-rated trainers available at $120/hr wet at Brackett Field (KPOC).",
+      alternates: { canonical: `${SITE_URL}/fleet` },
+      openGraph: {
+        title: p?.title || `Our Fleet | ${SITE_NAME}`,
+        description: p?.description || "Well-maintained Cessna 152 aircraft for flight training at Brackett Field. $120/hr wet rate.",
+        url: `${SITE_URL}/fleet`,
+        images: [{ url: "/N49202/N49202_1.jpeg", width: 1200, height: 630, alt: "Skylogix Aviation Fleet" }],
+      },
+    };
+  } catch {
+    return {
+      title: "Our Fleet - Cessna 152 Aircraft",
+      description: "Explore Skylogix Aviation's fleet of well-maintained Cessna 152 aircraft. IFR-rated trainers available at $120/hr wet at Brackett Field (KPOC).",
+      alternates: { canonical: `${SITE_URL}/fleet` },
+      openGraph: {
+        title: `Our Fleet | ${SITE_NAME}`,
+        description: "Well-maintained Cessna 152 aircraft for flight training at Brackett Field.",
+        url: `${SITE_URL}/fleet`,
+        images: [{ url: "/N49202/N49202_1.jpeg", width: 1200, height: 630, alt: "Skylogix Aviation Fleet" }],
+      },
+    };
+  }
+}
 
 export default async function FleetPage() {
   const fleet = await readFleet();
