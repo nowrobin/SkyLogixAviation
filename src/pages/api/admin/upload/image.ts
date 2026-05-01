@@ -3,12 +3,13 @@ import { isAuthenticated } from "@/lib/admin/auth";
 import formidable from "formidable";
 import fs from "fs";
 import path from "path";
+import { supabase } from "@/lib/supabase";
 
 export const config = {
-  api: {
-    bodyParser: false,
-  },
+  api: { bodyParser: false },
 };
+
+const BUCKET = "aircraft-images";
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,12 +23,10 @@ export default async function handler(
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const uploadDir = path.join(process.cwd(), "public");
-
   const form = formidable({
-    uploadDir,
+    uploadDir: "/tmp",
     keepExtensions: true,
-    maxFileSize: 10 * 1024 * 1024, // 10MB
+    maxFileSize: 10 * 1024 * 1024,
   });
 
   try {
@@ -38,18 +37,10 @@ export default async function handler(
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    // Get target directory from fields
     const dir = Array.isArray(fields.directory)
       ? fields.directory[0]
-      : fields.directory;
-    const targetDir = dir ? path.join(uploadDir, dir) : uploadDir;
+      : fields.directory ?? "";
 
-    // Ensure target directory exists
-    if (!fs.existsSync(targetDir)) {
-      fs.mkdirSync(targetDir, { recursive: true });
-    }
-
-    // Get original filename or use a generated one
     const originalName =
       (Array.isArray(fields.filename) ? fields.filename[0] : fields.filename) ||
       file.originalFilename ||
@@ -57,15 +48,34 @@ export default async function handler(
 
     const ext = path.extname(file.originalFilename || ".jpg");
     const baseName = path.basename(originalName, path.extname(originalName));
-    const finalName = `${baseName}${ext}`;
-    const finalPath = path.join(targetDir, finalName);
+    const timestamp = Date.now();
+    const storagePath = dir
+      ? `${dir}/${baseName}_${timestamp}${ext}`
+      : `${baseName}_${timestamp}${ext}`;
 
-    // Move file from temp location to target
-    fs.renameSync(file.filepath, finalPath);
+    const fileBuffer = fs.readFileSync(file.filepath);
+    const mimeType = file.mimetype || "image/jpeg";
 
-    const publicPath = `/${dir ? dir + "/" : ""}${finalName}`;
+    const { error: uploadError } = await supabase.storage
+      .from(BUCKET)
+      .upload(storagePath, fileBuffer, {
+        contentType: mimeType,
+        upsert: true,
+      });
 
-    return res.status(200).json({ path: publicPath });
+    // Clean up temp file
+    fs.unlinkSync(file.filepath);
+
+    if (uploadError) {
+      console.error("Supabase upload error:", uploadError);
+      return res.status(500).json({ error: uploadError.message });
+    }
+
+    const { data: urlData } = supabase.storage
+      .from(BUCKET)
+      .getPublicUrl(storagePath);
+
+    return res.status(200).json({ path: urlData.publicUrl });
   } catch (err) {
     console.error("Upload error:", err);
     return res.status(500).json({ error: "Failed to upload file" });
