@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Company (singleton - one row) ──
+
+model Company {
+  id       Int    @id @default(autoincrement())
+  name     String
+  address  String
+  city     String
+  state    String
+  zip      String
+  full     String
+  airport  String
+  phone    String
+  email    String
+  hours    String
+  rateAircraft    String @map("rate_aircraft")
+  rateInstruction String @map("rate_instruction")
+
+  @@map("company")
+}
+
+// ── Fleet / Aircraft ──
+
+model Aircraft {
+  id           String   @id // Registration number like "N49202"
+  name         String
+  year         Int
+  model        String
+  engine       String
+  horsepower   Int
+  flightRule   String   @map("flight_rule")
+  pricePerHour String   @map("price_per_hour")
+  description  String
+  images       String[]
+  order        Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("aircraft")
+}
+
+// ── Crew ──
+
+model CrewCategory {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  label String
+  order Int    @default(0)
+
+  members CrewMember[]
+
+  @@map("crew_category")
+}
+
+model CrewMember {
+  id             String       @id
+  name           String
+  role           String
+  image          String
+  bio            String?
+  certifications String[]
+  categoryKey    String       @map("category_key")
+  order          Int          @default(0)
+
+  category CrewCategory @relation(fields: [categoryKey], references: [key])
+
+  @@map("crew_member")
+}
+
+// ── Training ──
+
+model TrainingStep {
+  id           String   @id
+  order        Int
+  title        String
+  abbreviation String
+  icon         String
+  description  String
+  accentColor  String   @map("accent_color")
+  accentBg     String   @map("accent_bg")
+  accentText   String   @map("accent_text")
+  requirements String[]
+  learns       String[]
+  learnsLabel  String   @map("learns_label")
+
+  @@map("training_step")
+}
+
+model TrainingConfig {
+  id    Int    @id @default(autoincrement())
+  intro String
+  ctaTitle       String @map("cta_title")
+  ctaIcon        String @map("cta_icon")
+  ctaDescription String @map("cta_description")
+  ctaLocation    String @map("cta_location")
+
+  @@map("training_config")
+}
+
+// ── Navigation ──
+
+model NavItem {
+  id       Int     @id @default(autoincrement())
+  label    String
+  href     String
+  scrollTo String? @map("scroll_to")
+  order    Int     @default(0)
+
+  @@map("nav_item")
+}
+
+model NavCta {
+  id    Int    @id @default(autoincrement())
+  label String
+  href  String
+
+  @@map("nav_cta")
+}
+
+// ── Home Page ──
+
+model HomePage {
+  id               Int    @id @default(autoincrement())
+  heroTitle        String @map("hero_title")
+  heroSubtitle     String @map("hero_subtitle")
+  heroCta          String @map("hero_cta")
+  welcomeTitle     String @map("welcome_title")
+  welcomeDescription String @map("welcome_description")
+  aircraftsTitle   String @map("aircrafts_title")
+  crewTitle        String @map("crew_title")
+  crewTabs         String[] @map("crew_tabs")
+
+  @@map("home_page")
+}
+
+// ── Contact ──
+
+model ContactConfig {
+  id              Int    @id @default(autoincrement())
+  pageIntro       String @map("page_intro")
+  formFields      Json   @map("form_fields")
+  submitDefault   String @map("submit_default")
+  submitSending   String @map("submit_sending")
+  submitSuccess   String @map("submit_success")
+  submitAlreadySent String @map("submit_already_sent")
+  alertSuccess    String @map("alert_success")
+  alertError      String @map("alert_error")
+
+  @@map("contact_config")
+}
+
+// ── Metadata ──
+
+model SiteMetadata {
+  id                 Int    @id @default(autoincrement())
+  siteName           String @map("site_name")
+  defaultTitle       String @map("default_title")
+  defaultDescription String @map("default_description")
+  pages              Json   // { home: { title, description }, fleet: {...}, ... }
+
+  @@map("site_metadata")
+}

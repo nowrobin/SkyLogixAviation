@@ -1,45 +1,98 @@
 @import url("https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap");
 @import "tailwindcss";
 
+/* ── Design System ── */
 @theme {
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
-  --font-winky: var(--font-winky);
+  --font-winky: "Winky Sans", sans-serif;
   --font-mono: var(--font-geist-mono);
-  --breakpoint-mobile: 24rem;
-  --breakpoint-tablet: 40rem;
-  --breakpoint-laptop: 64rem;
-  --breakpoint-desktop: 80rem;
+
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* Colors - Primary (Navy) */
+  --color-navy-900: #0A1628;
+  --color-navy-800: #132238;
+  --color-navy-700: #1B3A5C;
+  --color-navy-600: #234B78;
+  --color-navy-500: #2E5E8E;
+  --color-navy-400: #4A7FB5;
+  --color-navy-300: #6B9FCC;
+  --color-navy-200: #A3C4E0;
+  --color-navy-100: #E8F1FA;
+
+  /* Colors - Accent (Gold) */
+  --color-gold-600: #D49A2A;
+  --color-gold-500: #FFBD59;
+  --color-gold-400: #FFCF7E;
+  --color-gold-300: #FFDEA3;
+  --color-gold-200: #FFECC7;
+  --color-gold-100: #FFF5E0;
+
+  /* Animations */
+  --animate-fadeIn: fadeIn 0.6s ease-out;
+  --animate-fadeInUp: fadeInUp 0.6s ease-out;
+  --animate-slideInLeft: slideInLeft 0.7s ease-out;
+  --animate-slideInRight: slideInRight 0.7s ease-out;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-48px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(48px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
 }
 
+/* ── Base ── */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #272626;
-  }
+  --foreground: #111827;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-@theme {
-  --animate-fadeIn: fadeIn 2s ease-out;
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
+/* ── Utility Classes ── */
+.section-padding {
+  @apply px-6 md:px-12 lg:px-24 xl:px-32;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFBD59 0%, #D49A2A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scroll animation observer targets */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
