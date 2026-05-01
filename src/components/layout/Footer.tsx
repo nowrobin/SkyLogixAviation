@@ -32,7 +32,7 @@ export default function Footer({ navData, companyData }: { navData: NavData; com
               Quick Links
             </h3>
             <ul className="space-y-3">
-              {navItems.map((item) => (
+              {(navItems ?? []).map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
@@ -61,7 +61,7 @@ export default function Footer({ navData, companyData }: { navData: NavData; com
             <ul className="space-y-3 text-sm text-navy-300">
               <li className="flex items-start gap-3">
                 <Image src="/icon/icon_Map.svg" alt="" width={18} height={18} className="mt-0.5 brightness-0 invert opacity-60" />
-                <span>{company.location.full}</span>
+                <span>{company.location?.full}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Image src="/icon/icon_Phone.svg" alt="" width={18} height={18} className="brightness-0 invert opacity-60" />

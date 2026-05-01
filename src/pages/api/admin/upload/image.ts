@@ -63,8 +63,8 @@ export default async function handler(
         upsert: true,
       });
 
-    // Clean up temp file
-    fs.unlinkSync(file.filepath);
+    // Clean up temp file — ignore if already gone
+    try { fs.unlinkSync(file.filepath); } catch { /* no-op */ }
 
     if (uploadError) {
       console.error("Supabase upload error:", uploadError);

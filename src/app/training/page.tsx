@@ -40,7 +40,9 @@ export default async function TrainingPage() {
   const [trainingData, companyData] = await Promise.all([
     readTraining(),
     readCompany(),
-  ]);
+  ]).catch(() => {
+    throw new Error("Failed to load training data");
+  });
 
   return (
     <>

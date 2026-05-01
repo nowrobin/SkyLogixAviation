@@ -15,6 +15,11 @@ export default withAuth(async function handler(
     return res.status(400).json({ error: "ids must be an array of strings" });
   }
 
-  await reorderFleet(ids);
-  return res.status(200).json({ success: true });
+  try {
+    await reorderFleet(ids);
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Reorder error:", err);
+    return res.status(500).json({ error: "Failed to reorder fleet" });
+  }
 });

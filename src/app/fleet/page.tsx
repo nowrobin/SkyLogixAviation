@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FleetPage() {
-  const fleet = await readFleet();
+  const fleet = await readFleet().catch(() => []);
 
   return (
     <div>

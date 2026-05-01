@@ -146,7 +146,7 @@ export async function readFleet() {
 }
 
 export async function reorderFleet(ids: string[]) {
-  await Promise.all(
+  await prisma.$transaction(
     ids.map((id, index) =>
       prisma.aircraft.update({ where: { id }, data: { order: index } })
     )

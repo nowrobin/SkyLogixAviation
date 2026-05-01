@@ -15,6 +15,10 @@ export default async function handler(
     return res.status(400).json({ message: "Missing required fields" });
   }
 
+  if (typeof name !== "string" || typeof email !== "string" || typeof message !== "string") {
+    return res.status(400).json({ message: "Invalid field types" });
+  }
+
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: Number(process.env.EMAIL_PORT),

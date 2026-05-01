@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function FleetDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const plane = await readFleetById(id);
+  const plane = await readFleetById(id).catch(() => null);
 
   if (!plane) return notFound();
 

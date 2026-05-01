@@ -42,7 +42,9 @@ export default async function HomePage() {
     readFleet(),
     readCompany(),
     readCrew(),
-  ]);
+  ]).catch(() => {
+    throw new Error("Failed to load page data");
+  });
 
   return (
     <>

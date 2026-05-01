@@ -40,7 +40,9 @@ export default async function InquiriesPage() {
   const [contactData, companyData] = await Promise.all([
     readContact(),
     readCompany(),
-  ]);
+  ]).catch(() => {
+    throw new Error("Failed to load contact data");
+  });
 
   return (
     <>

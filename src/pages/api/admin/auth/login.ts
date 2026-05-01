@@ -20,8 +20,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ error: "Invalid password" });
   }
 
-  const token = createSessionToken();
-  setSessionCookie(res, token);
-
-  return res.status(200).json({ success: true });
+  try {
+    const token = createSessionToken();
+    setSessionCookie(res, token);
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Session creation error:", err);
+    return res.status(500).json({ error: "Failed to create session" });
+  }
 }
