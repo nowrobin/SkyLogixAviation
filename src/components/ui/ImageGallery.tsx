@@ -15,6 +15,16 @@ export default function ImageGallery({ images, alt, className = "" }: ImageGalle
   const prev = () => setCurrent(current === 0 ? images.length - 1 : current - 1);
   const next = () => setCurrent(current === images.length - 1 ? 0 : current + 1);
 
+  if (images.length === 0) {
+    return (
+      <div className={`relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center ${className}`}>
+        <svg className="h-16 w-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+      </div>
+    );
+  }
+
   return (
     <div className={`relative group ${className}`}>
       <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden">
