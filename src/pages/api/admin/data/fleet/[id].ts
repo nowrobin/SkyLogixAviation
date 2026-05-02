@@ -40,7 +40,8 @@ export default withAuth(async function handler(
       return res.status(200).json({ success: true });
     } catch (err) {
       console.error("Failed to delete aircraft:", err);
-      return res.status(500).json({ error: "Failed to save data" });
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      return res.status(500).json({ error: `Failed to delete aircraft: ${msg}` });
     }
   }
 

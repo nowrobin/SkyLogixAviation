@@ -136,15 +136,16 @@ export default function FleetPage() {
     if (!confirm(`Delete aircraft ${id}?`)) return;
     setDeleteError(null);
     try {
-      const res = await fetch(`/api/admin/data/fleet/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/data/fleet/${encodeURIComponent(id)}`, { method: "DELETE" });
       if (res.ok) {
         setLocalOrder(null);
         reload();
       } else {
-        setDeleteError("Failed to delete");
+        const body = await res.json().catch(() => ({}));
+        setDeleteError(body.error || `Failed to delete (${res.status})`);
       }
-    } catch {
-      setDeleteError("Failed to delete");
+    } catch (err) {
+      setDeleteError(err instanceof Error ? err.message : "Failed to delete");
     }
   }
 
@@ -156,7 +157,7 @@ export default function FleetPage() {
         <AdminAlert
           type={error || deleteError ? "error" : "success"}
           message={error || deleteError || success || ""}
-          onClose={clearMessages}
+          onClose={() => { clearMessages(); setDeleteError(null); }}
         />
       )}
       {reorderSuccess && (
