@@ -41,13 +41,14 @@ export default function AdminImageUpload({
       });
 
       if (!res.ok) {
-        throw new Error("Upload failed");
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || "Upload failed");
       }
 
       const data = await res.json();
       onChange(data.path);
-    } catch {
-      setError("Failed to upload image");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload image");
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = "";
@@ -61,14 +62,26 @@ export default function AdminImageUpload({
       </label>
       <div className="flex items-start gap-4">
         {value && (
-          <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
-            <Image
-              src={value}
-              alt="Preview"
-              fill
-              className="object-cover"
-              unoptimized
-            />
+          <div className="relative h-24 w-24 flex-shrink-0">
+            <div className="relative h-24 w-24 overflow-hidden rounded-lg border border-gray-200">
+              <Image
+                src={value}
+                alt="Preview"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => onChange("")}
+              className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
+              title="Remove image"
+            >
+              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         )}
         <div className="flex-1">
