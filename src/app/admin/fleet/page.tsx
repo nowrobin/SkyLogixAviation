@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useAdminData } from "../_hooks/useAdminData";
@@ -22,6 +23,7 @@ interface Aircraft {
 }
 
 export default function FleetPage() {
+  const router = useRouter();
   const { data, loading, error, success, reload, clearMessages } =
     useAdminData<Aircraft[]>({ endpoint: "/api/admin/data/fleet" });
   const [showAdd, setShowAdd] = useState(false);
@@ -123,10 +125,7 @@ export default function FleetPage() {
         }),
       });
       if (res.ok) {
-        setShowAdd(false);
-        setNewId("");
-        setLocalOrder(null);
-        reload();
+        router.push(`/admin/fleet/${newId.trim()}`);
       }
     } finally {
       setAdding(false);
