@@ -76,7 +76,9 @@ export async function readHome() {
       title: row.heroTitle,
       subtitle: row.heroSubtitle,
       cta: row.heroCta,
+      bgImage: row.heroBgImage,
     },
+    ctaBgImage: row.ctaBgImage,
     welcome: {
       title: row.welcomeTitle,
       description: row.welcomeDescription,
@@ -92,7 +94,8 @@ export async function readHome() {
 }
 
 export async function writeHome(data: {
-  hero: { title: string; subtitle: string; cta: string };
+  hero: { title: string; subtitle: string; cta: string; bgImage: string };
+  ctaBgImage: string;
   welcome: { title: string; description: string };
   sections: {
     aircrafts: { title: string };
@@ -105,6 +108,8 @@ export async function writeHome(data: {
       heroTitle: data.hero.title,
       heroSubtitle: data.hero.subtitle,
       heroCta: data.hero.cta,
+      heroBgImage: data.hero.bgImage,
+      ctaBgImage: data.ctaBgImage,
       welcomeTitle: data.welcome.title,
       welcomeDescription: data.welcome.description,
       aircraftsTitle: data.sections.aircrafts.title,
@@ -115,6 +120,8 @@ export async function writeHome(data: {
       heroTitle: data.hero.title,
       heroSubtitle: data.hero.subtitle,
       heroCta: data.hero.cta,
+      heroBgImage: data.hero.bgImage,
+      ctaBgImage: data.ctaBgImage,
       welcomeTitle: data.welcome.title,
       welcomeDescription: data.welcome.description,
       aircraftsTitle: data.sections.aircrafts.title,
@@ -306,6 +313,8 @@ export async function readTraining() {
 
   return {
     intro: config?.intro ?? "",
+    heroBgImage: config?.heroBgImage ?? "/plane_image.jpg",
+    ctaBgImage: config?.ctaBgImage ?? "/landing_Image.png",
     cta: config
       ? {
           title: config.ctaTitle,
@@ -333,6 +342,8 @@ export async function readTraining() {
 
 export async function writeTraining(data: {
   intro: string;
+  heroBgImage: string;
+  ctaBgImage: string;
   cta: { title: string; icon: string; description: string; location: string };
   steps: {
     id: string;
@@ -353,6 +364,8 @@ export async function writeTraining(data: {
     where: { id: 1 },
     update: {
       intro: data.intro,
+      heroBgImage: data.heroBgImage,
+      ctaBgImage: data.ctaBgImage,
       ctaTitle: data.cta.title,
       ctaIcon: data.cta.icon,
       ctaDescription: data.cta.description,
@@ -360,6 +373,8 @@ export async function writeTraining(data: {
     },
     create: {
       intro: data.intro,
+      heroBgImage: data.heroBgImage,
+      ctaBgImage: data.ctaBgImage,
       ctaTitle: data.cta.title,
       ctaIcon: data.cta.icon,
       ctaDescription: data.cta.description,
@@ -427,6 +442,7 @@ export async function readContact() {
   const row = await prisma.contactConfig.findFirst();
   if (!row) throw new Error("Contact data not found");
   return {
+    heroBgImage: row.heroBgImage,
     contactPage: { intro: row.pageIntro },
     contactForm: {
       fields: row.formFields as { name: string; label: string; type: string; placeholder: string; required: boolean }[],
@@ -445,6 +461,7 @@ export async function readContact() {
 }
 
 export async function writeContact(data: {
+  heroBgImage: string;
   contactPage: { intro: string };
   contactForm: {
     fields: { name: string; label: string; type: string; placeholder: string; required: boolean }[];
@@ -455,6 +472,7 @@ export async function writeContact(data: {
   await prisma.contactConfig.upsert({
     where: { id: 1 },
     update: {
+      heroBgImage: data.heroBgImage,
       pageIntro: data.contactPage.intro,
       formFields: data.contactForm.fields,
       submitDefault: data.contactForm.submitButton.default,
@@ -465,6 +483,7 @@ export async function writeContact(data: {
       alertError: data.contactForm.alerts.error,
     },
     create: {
+      heroBgImage: data.heroBgImage,
       pageIntro: data.contactPage.intro,
       formFields: data.contactForm.fields,
       submitDefault: data.contactForm.submitButton.default,
@@ -486,6 +505,7 @@ export async function readMetadata() {
     siteName: row.siteName,
     defaultTitle: row.defaultTitle,
     defaultDescription: row.defaultDescription,
+    fleetBgImage: row.fleetBgImage,
     pages: row.pages,
   };
 }
@@ -494,6 +514,7 @@ export async function writeMetadata(data: {
   siteName: string;
   defaultTitle: string;
   defaultDescription: string;
+  fleetBgImage: string;
   pages: Record<string, { title: string; description: string }>;
 }) {
   await prisma.siteMetadata.upsert({
@@ -502,12 +523,14 @@ export async function writeMetadata(data: {
       siteName: data.siteName,
       defaultTitle: data.defaultTitle,
       defaultDescription: data.defaultDescription,
+      fleetBgImage: data.fleetBgImage,
       pages: data.pages,
     },
     create: {
       siteName: data.siteName,
       defaultTitle: data.defaultTitle,
       defaultDescription: data.defaultDescription,
+      fleetBgImage: data.fleetBgImage,
       pages: data.pages,
     },
   });

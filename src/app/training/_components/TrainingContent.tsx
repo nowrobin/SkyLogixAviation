@@ -22,6 +22,8 @@ interface TrainingStepData {
 
 interface TrainingContentProps {
   trainingIntro: string;
+  heroBgImage: string;
+  ctaBgImage: string;
   trainingSteps: TrainingStepData[];
   trainingCta: { title: string; icon: string; description: string; location: string } | null;
   companyAirport: string;
@@ -42,12 +44,12 @@ function AnimatedSection({ children, className = "" }: { children: React.ReactNo
   return <div ref={ref} className={`animate-on-scroll ${className}`}>{children}</div>;
 }
 
-export default function TrainingContent({ trainingIntro, trainingSteps, trainingCta, companyAirport }: TrainingContentProps) {
+export default function TrainingContent({ trainingIntro, heroBgImage, ctaBgImage, trainingSteps, trainingCta, companyAirport }: TrainingContentProps) {
   return (
     <div>
       {/* ── Hero ── */}
       <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden">
-        <Image src="/plane_image.jpg" alt="Flight training at Skylogix Aviation" fill className="object-cover" />
+        <Image src={heroBgImage || "/plane_image.jpg"} alt="Flight training at Skylogix Aviation" fill className="object-cover" />
         <div className="absolute inset-0 bg-navy-900/60" />
         <Container className="relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold text-white">Become A Pilot</h1>
@@ -185,7 +187,7 @@ export default function TrainingContent({ trainingIntro, trainingSteps, training
 
       {/* ── CTA ── */}
       <section className="relative py-20 md:py-28 overflow-hidden">
-        <Image src="/landing_Image.png" alt="" fill className="object-cover" />
+        <Image src={ctaBgImage || "/landing_Image.png"} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-navy-900/75" />
         <Container className="relative z-10 text-center">
           <AnimatedSection>

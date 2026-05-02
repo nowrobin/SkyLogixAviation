@@ -4,6 +4,7 @@ import { useAdminData } from "../_hooks/useAdminData";
 import AdminFormField from "../_components/AdminFormField";
 import AdminCard from "../_components/AdminCard";
 import AdminAlert from "../_components/AdminAlert";
+import AdminImageUpload from "../_components/AdminImageUpload";
 
 interface ContactField {
   name: string;
@@ -14,6 +15,7 @@ interface ContactField {
 }
 
 interface ContactData {
+  heroBgImage: string;
   contactPage: {
     intro: string;
   };
@@ -104,14 +106,22 @@ export default function ContactPage() {
       )}
 
       <AdminCard title="Page Content">
-        <AdminFormField
-          label="Introduction Text"
-          name="contactPage.intro"
-          type="textarea"
-          rows={3}
-          value={data.contactPage.intro}
-          onChange={updateField}
-        />
+        <div className="space-y-4">
+          <AdminFormField
+            label="Introduction Text"
+            name="contactPage.intro"
+            type="textarea"
+            rows={3}
+            value={data.contactPage.intro}
+            onChange={updateField}
+          />
+          <AdminImageUpload
+            label="Hero Background Image"
+            value={data.heroBgImage}
+            onChange={(path) => setData((prev) => prev ? { ...prev, heroBgImage: path } : prev)}
+            directory="banners"
+          />
+        </div>
       </AdminCard>
 
       <div className="flex items-center justify-between">

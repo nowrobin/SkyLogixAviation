@@ -51,6 +51,7 @@ export default async function HomePage() {
       <LocalBusinessJsonLd companyData={companyData} />
       <HomeContent
         hero={homeData.hero}
+        ctaBgImage={homeData.ctaBgImage}
         welcome={homeData.welcome}
         fleet={fleetData}
         company={companyData}

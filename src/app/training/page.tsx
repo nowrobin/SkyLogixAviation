@@ -57,6 +57,8 @@ export default async function TrainingPage() {
       <CourseListJsonLd steps={trainingData.steps} companyData={companyData} />
       <TrainingContent
         trainingIntro={trainingData.intro}
+        heroBgImage={trainingData.heroBgImage}
+        ctaBgImage={trainingData.ctaBgImage}
         trainingSteps={trainingData.steps}
         trainingCta={trainingData.cta}
         companyAirport={companyData.location.airport}

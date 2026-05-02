@@ -6,6 +6,7 @@ import AdminFormField from "../_components/AdminFormField";
 import AdminCard from "../_components/AdminCard";
 import AdminAlert from "../_components/AdminAlert";
 import AdminArrayField from "../_components/AdminArrayField";
+import AdminImageUpload from "../_components/AdminImageUpload";
 import AdminPreviewToggle from "../_components/AdminPreviewToggle";
 import PreviewFrame from "../_components/PreviewFrame";
 import TrainingPreview from "../_components/previews/TrainingPreview";
@@ -27,6 +28,8 @@ interface TrainingStep {
 
 interface TrainingData {
   intro: string;
+  heroBgImage: string;
+  ctaBgImage: string;
   cta: {
     title: string;
     icon: string;
@@ -154,14 +157,22 @@ export default function TrainingPage() {
       ) : (
         <>
       <AdminCard title="Introduction">
-        <AdminFormField
-          label="Intro Text"
-          name="intro"
-          type="textarea"
-          rows={3}
-          value={data.intro}
-          onChange={updateField}
-        />
+        <div className="space-y-4">
+          <AdminFormField
+            label="Intro Text"
+            name="intro"
+            type="textarea"
+            rows={3}
+            value={data.intro}
+            onChange={updateField}
+          />
+          <AdminImageUpload
+            label="Hero Background Image"
+            value={data.heroBgImage}
+            onChange={(path) => setData((prev) => prev ? { ...prev, heroBgImage: path } : prev)}
+            directory="banners"
+          />
+        </div>
       </AdminCard>
 
       <AdminCard title="CTA Section">
@@ -172,6 +183,12 @@ export default function TrainingPage() {
           </div>
           <AdminFormField label="Description" name="cta.description" type="textarea" rows={2} value={data.cta.description} onChange={updateField} />
           <AdminFormField label="Location" name="cta.location" value={data.cta.location} onChange={updateField} />
+          <AdminImageUpload
+            label="CTA Background Image"
+            value={data.ctaBgImage}
+            onChange={(path) => setData((prev) => prev ? { ...prev, ctaBgImage: path } : prev)}
+            directory="banners"
+          />
         </div>
       </AdminCard>
 

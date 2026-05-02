@@ -5,6 +5,7 @@ import { useAdminData } from "../_hooks/useAdminData";
 import AdminFormField from "../_components/AdminFormField";
 import AdminCard from "../_components/AdminCard";
 import AdminAlert from "../_components/AdminAlert";
+import AdminImageUpload from "../_components/AdminImageUpload";
 import AdminPreviewToggle from "../_components/AdminPreviewToggle";
 import PreviewFrame from "../_components/PreviewFrame";
 import HomePreview from "../_components/previews/HomePreview";
@@ -14,7 +15,9 @@ interface HomeData {
     title: string;
     subtitle: string;
     cta: string;
+    bgImage: string;
   };
+  ctaBgImage: string;
   welcome: {
     title: string;
     description: string;
@@ -98,7 +101,22 @@ export default function HomePage() {
                 value={data.hero.cta}
                 onChange={updateField}
               />
+              <AdminImageUpload
+                label="Hero Background Image"
+                value={data.hero.bgImage}
+                onChange={(path) => updateField("hero.bgImage", path)}
+                directory="banners"
+              />
             </div>
+          </AdminCard>
+
+          <AdminCard title="CTA Banner Section" description="The 'Ready to Fly?' background image">
+            <AdminImageUpload
+              label="CTA Background Image"
+              value={data.ctaBgImage}
+              onChange={(path) => setData((prev) => prev ? { ...prev, ctaBgImage: path } : prev)}
+              directory="banners"
+            />
           </AdminCard>
 
           <AdminCard title="Welcome Section">

@@ -96,6 +96,8 @@ model TrainingStep {
 model TrainingConfig {
   id    Int    @id @default(autoincrement())
   intro String
+  heroBgImage    String @default("/plane_image.jpg") @map("hero_bg_image")
+  ctaBgImage     String @default("/landing_Image.png") @map("cta_bg_image")
   ctaTitle       String @map("cta_title")
   ctaIcon        String @map("cta_icon")
   ctaDescription String @map("cta_description")
@@ -131,6 +133,8 @@ model HomePage {
   heroTitle        String @map("hero_title")
   heroSubtitle     String @map("hero_subtitle")
   heroCta          String @map("hero_cta")
+  heroBgImage      String @default("/landing_Image.png") @map("hero_bg_image")
+  ctaBgImage       String @default("/plane_image.jpg") @map("cta_bg_image")
   welcomeTitle     String @map("welcome_title")
   welcomeDescription String @map("welcome_description")
   aircraftsTitle   String @map("aircrafts_title")
@@ -144,6 +148,7 @@ model HomePage {
 
 model ContactConfig {
   id              Int    @id @default(autoincrement())
+  heroBgImage     String @default("/mockDesign.png") @map("hero_bg_image")
   pageIntro       String @map("page_intro")
   formFields      Json   @map("form_fields")
   submitDefault   String @map("submit_default")
@@ -163,6 +168,7 @@ model SiteMetadata {
   siteName           String @map("site_name")
   defaultTitle       String @map("default_title")
   defaultDescription String @map("default_description")
+  fleetBgImage       String @default("/landing_Image.png") @map("fleet_bg_image")
   pages              Json   // { home: { title, description }, fleet: {...}, ... }
 
   @@map("site_metadata")

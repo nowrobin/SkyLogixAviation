@@ -7,6 +7,15 @@ import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL, SITE_NAME } from "@/lib/constants";
 import { readFleet, readMetadata } from "@/lib/admin/dal";
 
+async function getFleetBgImage() {
+  try {
+    const meta = await readMetadata();
+    return meta.fleetBgImage || "/landing_Image.png";
+  } catch {
+    return "/landing_Image.png";
+  }
+}
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -40,7 +49,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FleetPage() {
-  const fleet = await readFleet().catch(() => []);
+  const [fleet, fleetBgImage] = await Promise.all([
+    readFleet().catch(() => []),
+    getFleetBgImage(),
+  ]);
 
   return (
     <div>
@@ -52,7 +64,7 @@ export default async function FleetPage() {
       />
       {/* Page Header */}
       <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden">
-        <Image src="/landing_Image.png" alt="" fill className="object-cover" />
+        <Image src={fleetBgImage} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-navy-900/60" />
         <Container className="relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold text-white">Our Fleet</h1>

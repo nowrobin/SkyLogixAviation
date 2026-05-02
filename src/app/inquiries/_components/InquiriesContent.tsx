@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { CompanyData } from "@/components/layout/LayoutContent";
 
 interface ContactData {
+  heroBgImage: string;
   contactPage: { intro: string };
   contactForm: {
     fields: { name: string; label: string; type: string; placeholder: string; required: boolean }[];
@@ -16,7 +17,7 @@ interface ContactData {
 import Button from "@/components/ui/Button";
 
 export default function InquiriesContent({ contactData, companyData }: { contactData: ContactData; companyData: CompanyData }) {
-  const { contactPage, contactForm } = contactData;
+  const { heroBgImage, contactPage, contactForm } = contactData;
   const company = companyData;
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -48,7 +49,7 @@ export default function InquiriesContent({ contactData, companyData }: { contact
     <div>
       {/* Page Header */}
       <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden">
-        <Image src="/mockDesign.png" alt="Contact Skylogix Aviation" fill className="object-cover" />
+        <Image src={heroBgImage || "/mockDesign.png"} alt="Contact Skylogix Aviation" fill className="object-cover" />
         <div className="absolute inset-0 bg-navy-900/60" />
         <Container className="relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold text-white">Contact Us</h1>

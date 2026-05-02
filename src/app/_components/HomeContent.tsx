@@ -57,7 +57,8 @@ interface CrewMemberData {
 }
 
 interface HomeContentProps {
-  hero: { title: string; subtitle: string; cta: string };
+  hero: { title: string; subtitle: string; cta: string; bgImage: string };
+  ctaBgImage: string;
   welcome: { title: string; description: string };
   fleet: AircraftData[];
   company: CompanyData;
@@ -65,7 +66,7 @@ interface HomeContentProps {
   crewMembers: Record<string, CrewMemberData[]>;
 }
 
-export default function HomeContent({ hero, welcome, fleet, company, crewCategories, crewMembers }: HomeContentProps) {
+export default function HomeContent({ hero, ctaBgImage, welcome, fleet, company, crewCategories, crewMembers }: HomeContentProps) {
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
     if (hash) {
@@ -80,7 +81,7 @@ export default function HomeContent({ hero, welcome, fleet, company, crewCategor
       {/* ── Hero ── */}
       <section id="top" className="relative flex items-center justify-center h-[85vh] md:h-screen overflow-hidden">
         <Image
-          src="/landing_Image.png"
+          src={hero.bgImage || "/landing_Image.png"}
           alt="Skylogix Aviation flight training at Brackett Field"
           fill
           className="object-cover"
@@ -251,7 +252,7 @@ export default function HomeContent({ hero, welcome, fleet, company, crewCategor
 
       {/* ── CTA Banner ── */}
       <section className="relative py-20 md:py-28 overflow-hidden">
-        <Image src="/plane_image.jpg" alt="Cessna 152 aircraft at Brackett Field" fill className="object-cover" />
+        <Image src={ctaBgImage || "/plane_image.jpg"} alt="Cessna 152 aircraft at Brackett Field" fill className="object-cover" />
         <div className="absolute inset-0 bg-navy-900/70" />
         <Container className="relative z-10 text-center">
           <AnimatedSection>

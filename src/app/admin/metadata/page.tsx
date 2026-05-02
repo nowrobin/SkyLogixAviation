@@ -4,6 +4,7 @@ import { useAdminData } from "../_hooks/useAdminData";
 import AdminFormField from "../_components/AdminFormField";
 import AdminCard from "../_components/AdminCard";
 import AdminAlert from "../_components/AdminAlert";
+import AdminImageUpload from "../_components/AdminImageUpload";
 
 interface PageMeta {
   title: string;
@@ -14,6 +15,7 @@ interface MetadataData {
   siteName: string;
   defaultTitle: string;
   defaultDescription: string;
+  fleetBgImage: string;
   pages: Record<string, PageMeta>;
 }
 
@@ -61,6 +63,15 @@ export default function MetadataPage() {
           <AdminFormField label="Default Title" name="defaultTitle" value={data.defaultTitle} onChange={updateField} />
           <AdminFormField label="Default Description" name="defaultDescription" type="textarea" rows={2} value={data.defaultDescription} onChange={updateField} />
         </div>
+      </AdminCard>
+
+      <AdminCard title="Fleet Page Banner" description="Background image for the fleet page header">
+        <AdminImageUpload
+          label="Fleet Banner Image"
+          value={data.fleetBgImage}
+          onChange={(path) => setData((prev) => prev ? { ...prev, fleetBgImage: path } : prev)}
+          directory="banners"
+        />
       </AdminCard>
 
       {Object.entries(data.pages).map(([key, page]) => (
