@@ -42,7 +42,23 @@ export default function FleetEditPage({
     );
   }
 
-  if (!data) return null;
+  if (!data) {
+    return (
+      <div className="mx-auto max-w-3xl space-y-4">
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <Link href="/admin/fleet" className="hover:text-gray-700">Fleet</Link>
+          <span>/</span>
+          <span className="text-gray-900">{id}</span>
+        </div>
+        <div className="rounded-xl border border-red-100 bg-red-50 p-6 text-center">
+          <p className="text-sm font-medium text-red-600">{error || "Aircraft not found"}</p>
+          <Link href="/admin/fleet" className="mt-3 inline-block text-xs text-gray-500 hover:text-gray-700 underline">
+            Back to Fleet
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   function updateField(name: string, value: string | number) {
     setData((prev) => {
