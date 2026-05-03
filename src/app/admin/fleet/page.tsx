@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useAdminData } from "../_hooks/useAdminData";
-import AdminCard from "../_components/AdminCard";
 import AdminAlert from "../_components/AdminAlert";
 
 interface Aircraft {
@@ -26,9 +25,6 @@ export default function FleetPage() {
   const router = useRouter();
   const { data, loading, error, success, reload, clearMessages } =
     useAdminData<Aircraft[]>({ endpoint: "/api/admin/data/fleet" });
-  const [showAdd, setShowAdd] = useState(false);
-  const [newId, setNewId] = useState("");
-  const [adding, setAdding] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [reordering, setReordering] = useState(false);
   const [reorderSuccess, setReorderSuccess] = useState(false);
@@ -102,35 +98,7 @@ export default function FleetPage() {
     setLocalOrder(items);
   }
 
-  // ── Add / Delete ───────────────────────────────────────────────────────────
-
-  async function handleAdd() {
-    if (!newId.trim()) return;
-    setAdding(true);
-    try {
-      const res = await fetch("/api/admin/data/fleet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: newId.trim(),
-          name: newId.trim(),
-          year: new Date().getFullYear(),
-          model: "",
-          engine: "",
-          horsepower: 0,
-          flightRule: "VFR",
-          pricePerHour: "",
-          description: "",
-          images: [],
-        }),
-      });
-      if (res.ok) {
-        router.push(`/admin/fleet/${newId.trim()}`);
-      }
-    } finally {
-      setAdding(false);
-    }
-  }
+  // ── Delete ─────────────────────────────────────────────────────────────────
 
   async function handleDelete(id: string) {
     if (!confirm(`Delete aircraft ${id}?`)) return;
@@ -205,7 +173,7 @@ export default function FleetPage() {
             </button>
           )}
           <button
-            onClick={() => setShowAdd(!showAdd)}
+            onClick={() => router.push("/admin/fleet/new")}
             className="flex items-center gap-1.5 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -215,41 +183,6 @@ export default function FleetPage() {
           </button>
         </div>
       </div>
-
-      {/* Add form */}
-      {showAdd && (
-        <AdminCard>
-          <div className="flex items-end gap-3">
-            <div className="flex-1">
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">
-                Registration Number (ID)
-              </label>
-              <input
-                type="text"
-                value={newId}
-                onChange={(e) => setNewId(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleAdd()}
-                placeholder="e.g. N12345"
-                autoFocus
-                className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-[#0A1628] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0A1628]/10"
-              />
-            </div>
-            <button
-              onClick={handleAdd}
-              disabled={adding || !newId.trim()}
-              className="rounded-lg bg-[#0A1628] px-5 py-2 text-sm font-medium text-white hover:bg-[#132238] disabled:opacity-50"
-            >
-              {adding ? "Adding..." : "Add"}
-            </button>
-            <button
-              onClick={() => setShowAdd(false)}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-gray-500 hover:bg-gray-50"
-            >
-              Cancel
-            </button>
-          </div>
-        </AdminCard>
-      )}
 
       {/* Hint */}
       {fleet.length > 1 && (
@@ -342,7 +275,7 @@ export default function FleetPage() {
               </div>
 
               <Link
-                href={`/admin/fleet/${aircraft.id}`}
+                href={`/admin/fleet/${encodeURIComponent(aircraft.id)}/edit`}
                 className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
               >
                 Edit
