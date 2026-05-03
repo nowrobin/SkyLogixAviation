@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAdminData } from "../../../_hooks/useAdminData";
 import AdminFormField from "../../../_components/AdminFormField";
@@ -30,6 +31,7 @@ export default function FleetEditPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const router = useRouter();
   const { data, loading, saving, error, success, setData, save, clearMessages } =
     useAdminData<Aircraft>({ endpoint: `/api/admin/data/fleet/${id}` });
   const [mode, setMode] = useState<"edit" | "preview">("edit");
@@ -189,7 +191,7 @@ export default function FleetEditPage({
           Cancel
         </Link>
         <button
-          onClick={() => save()}
+          onClick={async () => { const ok = await save(); if (ok) router.push("/admin/fleet"); }}
           disabled={saving}
           className="rounded-lg bg-navy-900 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navy-800 disabled:opacity-50"
         >
