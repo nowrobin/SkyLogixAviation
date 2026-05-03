@@ -78,7 +78,7 @@ export default function FleetNewPage() {
         body: JSON.stringify(data),
       });
       if (res.ok) {
-        router.push(`/admin/fleet/${encodeURIComponent(data.id.trim())}/edit`);
+        router.push("/admin/fleet");
       } else {
         const body = await res.json().catch(() => ({}));
         setError(body.error || `Failed to create (${res.status})`);
