@@ -40,6 +40,7 @@ const defaultData: Aircraft = {
 export default function FleetNewPage() {
   const router = useRouter();
   const [data, setData] = useState<Aircraft>(defaultData);
+  const [pendingFiles, setPendingFiles] = useState<(File | null)[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mode, setMode] = useState<"edit" | "preview">("edit");
@@ -51,17 +52,46 @@ export default function FleetNewPage() {
   function updateImage(index: number, path: string) {
     setData((prev) => {
       const images = [...prev.images];
+      const old = images[index];
+      if (old?.startsWith("blob:")) URL.revokeObjectURL(old);
       images[index] = path;
       return { ...prev, images };
+    });
+    setPendingFiles((prev) => {
+      const files = [...prev];
+      files[index] = null;
+      return files;
+    });
+  }
+
+  function handleFileSelect(index: number, file: File) {
+    const preview = URL.createObjectURL(file);
+    setData((prev) => {
+      const images = [...prev.images];
+      const old = images[index];
+      if (old?.startsWith("blob:")) URL.revokeObjectURL(old);
+      images[index] = preview;
+      return { ...prev, images };
+    });
+    setPendingFiles((prev) => {
+      const files = [...prev];
+      files[index] = file;
+      return files;
     });
   }
 
   function addImage() {
     setData((prev) => ({ ...prev, images: [...prev.images, ""] }));
+    setPendingFiles((prev) => [...prev, null]);
   }
 
   function removeImage(index: number) {
-    setData((prev) => ({ ...prev, images: prev.images.filter((_, i) => i !== index) }));
+    setData((prev) => {
+      const old = prev.images[index];
+      if (old?.startsWith("blob:")) URL.revokeObjectURL(old);
+      return { ...prev, images: prev.images.filter((_, i) => i !== index) };
+    });
+    setPendingFiles((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function handleCreate() {
@@ -69,17 +99,49 @@ export default function FleetNewPage() {
       setError("Registration number (ID) is required.");
       return;
     }
-    if (data.images.some((img) => !img.trim())) {
-      setError("Some images failed to upload or are empty. Please remove empty image slots before creating.");
-      return;
-    }
+
     setSaving(true);
     setError(null);
+
+    const uploadedImages = [...data.images];
+
+    for (let i = 0; i < pendingFiles.length; i++) {
+      const file = pendingFiles[i];
+      if (!file) continue;
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("directory", data.id.trim());
+
+      try {
+        const res = await fetch("/api/admin/upload/image", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          setError(`Image ${i + 1} upload failed: ${body.error || "Upload failed"}`);
+          setSaving(false);
+          return;
+        }
+
+        const { path } = await res.json();
+        uploadedImages[i] = path;
+      } catch (err) {
+        setError(`Image ${i + 1} upload failed: ${err instanceof Error ? err.message : "Upload failed"}`);
+        setSaving(false);
+        return;
+      }
+    }
+
+    const finalImages = uploadedImages.filter((url) => url && !url.startsWith("blob:"));
+
     try {
       const res = await fetch("/api/admin/data/fleet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, id: data.id.trim(), images: finalImages }),
       });
       if (res.ok) {
         router.push("/admin/fleet");
@@ -157,7 +219,8 @@ export default function FleetNewPage() {
                       label={`Image ${index + 1}`}
                       value={img}
                       onChange={(path) => updateImage(index, path)}
-                      directory={data.id || "new"}
+                      onFileSelect={(file) => handleFileSelect(index, file)}
+                      deferred
                     />
                   </div>
                   <button

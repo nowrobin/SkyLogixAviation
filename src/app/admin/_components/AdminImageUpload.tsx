@@ -9,6 +9,8 @@ interface AdminImageUploadProps {
   directory?: string;
   filename?: string;
   label?: string;
+  deferred?: boolean;
+  onFileSelect?: (file: File) => void;
 }
 
 export default function AdminImageUpload({
@@ -17,6 +19,8 @@ export default function AdminImageUpload({
   directory,
   filename,
   label = "Image",
+  deferred = false,
+  onFileSelect,
 }: AdminImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -27,6 +31,13 @@ export default function AdminImageUpload({
     if (!file) return;
 
     setError("");
+
+    if (deferred && onFileSelect) {
+      onFileSelect(file);
+      if (fileRef.current) fileRef.current.value = "";
+      return;
+    }
+
     setUploading(true);
 
     const formData = new FormData();
