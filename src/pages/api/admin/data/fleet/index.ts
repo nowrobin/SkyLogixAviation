@@ -20,7 +20,11 @@ export default withAuth(async function handler(
     try {
       await createAircraft(req.body);
       return res.status(201).json({ success: true });
-    } catch (err) {
+    } catch (err: unknown) {
+      const code = (err as { code?: string }).code;
+      if (code === "P2002") {
+        return res.status(409).json({ error: `ID "${req.body.id}" already exists. Please use a different registration number.` });
+      }
       console.error("Failed to add aircraft:", err);
       return res.status(500).json({ error: "Failed to save data" });
     }
