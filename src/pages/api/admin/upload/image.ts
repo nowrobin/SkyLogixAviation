@@ -37,9 +37,9 @@ export default async function handler(
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    const dir = Array.isArray(fields.directory)
+    const dir = (Array.isArray(fields.directory)
       ? fields.directory[0]
-      : fields.directory ?? "";
+      : fields.directory ?? "").trim();
 
     const originalName =
       (Array.isArray(fields.filename) ? fields.filename[0] : fields.filename) ||
