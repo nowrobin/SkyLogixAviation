@@ -69,6 +69,10 @@ export default function FleetNewPage() {
       setError("Registration number (ID) is required.");
       return;
     }
+    if (data.images.some((img) => !img.trim())) {
+      setError("Some images failed to upload or are empty. Please remove empty image slots before creating.");
+      return;
+    }
     setSaving(true);
     setError(null);
     try {
